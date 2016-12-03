@@ -1,0 +1,206 @@
+﻿<script type="text/javascript">
+    var ui_homepage_c1mon = new Array();
+    var ui_homepage_c2fact = new Array();
+    var ui_homepage_c1date
+    var ui_homepage_c2date
+    $(function () {
+        LoardChart1();
+        LoardChart2();
+        setInterval("LoardChart2();", 300000);
+        dclose_homepage();
+    });
+
+    function LoardChart1() {
+        GetChartMonth();
+        GetChart1Data();
+
+        $('#ui_homepage_c1div').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '近6个月出货量比较'
+            },
+            xAxis: {
+                categories: ui_homepage_c1mon
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '方量'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} 方</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true,
+                crosshairs: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: ui_homepage_c1date
+        });
+    }
+
+    function LoardChart2() {
+        GetChartFact();
+        GetChart2Data();
+        $('#ui_homepage_c2div').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: '当日预计量\出货量比较'
+            },
+            xAxis: {
+                categories: ui_homepage_c2fact,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '方量',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+            //valueSuffix: ' 单位'
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} 方</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true,
+                crosshairs: true
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'horizontal',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            colors: ['#058DC7', '#50B432'],
+            series: ui_homepage_c2date
+        });                        
+    }
+
+    function GetChartMonth() {
+        $.ajax({
+            url: "ashx/bg_chart.ashx",
+            type: "post",
+            data: { "action": "getChartMonth" },
+            dataType: "json",
+            timeout: 5000,
+            async: false,
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    ui_homepage_c1mon[i] = data[i].date;
+                }
+            }
+        });
+    }
+
+    function GetChartFact() {
+        $.ajax({
+            url: "ashx/bg_chart.ashx",
+            type: "post",
+            data: { "action": "getChartFact" },
+            dataType: "json",
+            timeout: 5000,
+            async: false,
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    ui_homepage_c2fact[i] = data[i].factname;
+                }
+            }
+        });
+    }
+
+    function GetChart1Data() {
+        $.ajax({
+            url: "ashx/bg_chart.ashx",
+            type: "post",
+            data: { "action": "getChart1Data" },
+            dataType: "text",
+            timeout: 5000,
+            async: false,
+            success: function (data) {
+                try {
+                    ui_homepage_c1date = eval('(' + data + ')');
+                }
+                catch (e) {
+                    alert(e.message);
+                }
+            }
+        });
+    }
+
+    function GetChart2Data() {
+        $.ajax({
+            url: "ashx/bg_chart.ashx",
+            type: "post",
+            data: { "action": "getChart2Data" },
+            dataType: "text",
+            timeout: 5000,
+            async: false,
+            success: function (data) {
+                try {
+                    ui_homepage_c2date = eval('(' + data + ')');
+                }
+                catch (e) {
+                    alert(e.message);
+                }
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_homepage() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+<div id="ui_homepage_pdiv" class="easyui-panel" data-options="fit:true,border:false" style="padding:1%">
+    <div id="ui_homepage_p1div" class="easyui-panel" title="出货量比较图表" style="width:99%;height:300px;"
+        data-options="tools:'#ui_homepage_tools1'">
+        <div id="ui_homepage_c1div" style="width:100%;height:270px;overflow:hidden" >
+        </div>
+    </div>
+    <br />
+    <div id="ui_homepage_p2div" class="easyui-panel" title="当日预计量\出货量比较图表" style="width:99%;height:300px;"
+            data-options="tools:'#ui_homepage_tools2'">
+        <div id="ui_homepage_c2div" style="width:100%;height:270px;overflow:hidden" >
+    </div>
+    <div id="ui_homepage_tools1">
+        <a href="javascript:void(0)" class="icon-reload" onclick="javascript:LoardChart1();"></a>
+    </div>
+    <div id="ui_homepage_tools2">
+        <a href="javascript:void(0)" class="icon-reload" onclick="javascript:LoardChart2();"></a>
+    </div>
+</div>

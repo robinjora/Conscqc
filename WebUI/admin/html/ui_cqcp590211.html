@@ -1,0 +1,174 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590211_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        var ui_cqcp590211_myDate = new Date();
+        var ui_cqcp590211_year = ui_cqcp590211_myDate.getFullYear();
+        var ui_cqcp590211_month = ui_cqcp590211_myDate.getMonth() + 1;
+        if (ui_cqcp590211_month < 10) {
+            ui_cqcp590211_month = "0" + ui_cqcp590211_month;
+        }
+        var ui_cqcp590211_firstDay = ui_cqcp590211_year + "-" + ui_cqcp590211_month + "-01";
+
+        ui_cqcp590211_myDate = new Date(ui_cqcp590211_year, ui_cqcp590211_month, 0);
+        var ui_cqcp590211_lastDay = ui_cqcp590211_year + "-" + ui_cqcp590211_month + "-" + ui_cqcp590211_myDate.getDate();
+
+        $("#ui_cqcp590211_begdateFilter").val(ui_cqcp590211_firstDay);
+        $("#ui_cqcp590211_enddateFilter").val(ui_cqcp590211_lastDay);
+
+    });
+
+    //打印
+//    function print_cqcp590211() {
+//        $("#ui_cqcp590211_rptframe").contents().find("#btn_print").click();
+//    }
+
+    //加载等待页面
+    function loading_cqcp590211() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590211() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+
+    $("#ui_cqcp590211_dateChoose").combobox({
+        value: "本月",
+        onChange: function (n, o) {
+            $("#ui_cqcp590211_enddateFilter").val("2015-01-01");
+            var bdate = new Date();
+            var edate = new Date();
+
+            if (n == 1)  //今天
+            {
+            }
+            else if (n == 2)   //昨天
+            {
+                bdate.setDate(bdate.getDate() - 1);
+                edate.setDate(edate.getDate() - 1);
+            }
+            else if (n == 3)   //本周  周一 ~ 周日
+            {
+                bdate.setDate(bdate.getDate() - bdate.getDay() + 1);
+                edate.setDate(bdate.getDate() + 6);
+            }
+            else if (n == 4)     //本月  本月第一天 ~ 本月最后一天
+            {
+                bdate.setDate(1);
+
+                edate.setMonth(edate.getMonth() + 1);
+                edate.setDate(1);
+                edate.setDate(edate.getDate() - 1);
+            }
+            else if (n == 5)     //近三个月  三个月前第一天 ~ 本月最后一天
+            {
+
+                bdate.setMonth(bdate.getMonth() - 2);
+                bdate.setDate(1);
+
+                edate.setMonth(edate.getMonth() + 1);
+                edate.setDate(1);
+                edate.setDate(edate.getDate() - 1);
+            }
+            else if (n == 6)     //本年  本年第一天 ~ 本年最后一天
+            {
+                bdate.setMonth(0, 1);
+                edate.setMonth(11, 31);
+            }
+            else
+            { }
+
+            var byear = bdate.getFullYear();
+            var bmonth = bdate.getMonth() + 1;
+            var bday = bdate.getDate();
+            var bdatestring = byear + '-' + (bmonth < 10 ? '0' + bmonth : bmonth) + '-' + (bday < 10 ? '0' + bday : bday);
+
+            try {
+                $("#ui_cqcp590211_begdateFilter").val(bdatestring);
+                $("#ui_cqcp590211_enddateFilter").val(bdatestring);
+            }
+            catch (e) {
+                alert(e.message);
+                alert(e.description)
+                alert(e.number)
+                alert(e.name)
+            }
+
+            test();
+            //$("#ui_cqcp590211_enddateFilter").val(formatDate(edate, "yyyy-MM-dd"));
+        }
+    });
+
+    function test() {
+        $("#ui_cqcp590211_enddateFilter").val("2015-01-01");
+    }
+</script>
+
+<div id="ui_cqcp590211_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590211_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590211_searchDiv">
+            <form id="ui_cqcp590211_searchForm" method="post" target="ui_cqcp590211_rptframe" action="aspx/cqcp590211.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>查询日期:</th>
+                    <td><input id="ui_cqcp590211_begdateFilter" name="ui_cqcp590211_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:100px;" data-options="required:true"/>
+                        -
+                        <input id="ui_cqcp590211_enddateFilter" name="ui_cqcp590211_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:100px;" data-options="required:true"/>
+                        <select id="ui_cqcp590211_dateChoose" name="ui_cqcp590211_dateChoose"
+                            <!--class="easyui-combobox" style="width: 80px;" editable="false" -->>
+                            <option value="1">今天</option>
+                            <option value="2">昨天</option>
+                            <option value="3">本周</option>
+                            <option value="4">本月</option>
+                            <option value="5">近三个月</option>
+                            <option value="6">本年</option>
+                        </select></td>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590211_factidFilter" name="ui_cqcp590211_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:140px;" prompt="全选"></select></td>
+                    <th>图表类型:</th>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590211_searchA" onClick="javascript:loading_cqcp590211();ui_cqcp590211_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true" style="visibility:hidden"
+                                id="ui_cqcp590211_printA" onclick="print_cqcp590211()" style="visibility:hidden">打印</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590211_rptframe" name="ui_cqcp590211_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

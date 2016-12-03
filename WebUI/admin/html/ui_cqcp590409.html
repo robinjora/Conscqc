@@ -1,0 +1,100 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590409_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        var ui_cqcp590409_myDate = new Date();
+        var ui_cqcp590409_year = ui_cqcp590409_myDate.getFullYear();
+        var ui_cqcp590409_month = ui_cqcp590409_myDate.getMonth() + 1;
+        if (ui_cqcp590409_month < 10) {
+            ui_cqcp590409_month = "0" + ui_cqcp590409_month;
+        }
+        var ui_cqcp590409_firstDay = ui_cqcp590409_year + "-" + ui_cqcp590409_month + "-01";
+
+        ui_cqcp590409_myDate = new Date(ui_cqcp590409_year, ui_cqcp590409_month, 0);
+        var ui_cqcp590409_lastDay = ui_cqcp590409_year + "-" + ui_cqcp590409_month + "-" + ui_cqcp590409_myDate.getDate();
+
+        $("#ui_cqcp590409_begdateFilter").val(ui_cqcp590409_firstDay);
+        $("#ui_cqcp590409_enddateFilter").val(ui_cqcp590409_lastDay);
+
+    });
+
+    //打印
+//    function print_cqcp590409() {
+//        $("#ui_cqcp590409_rptframe").contents().find("#btn_print").click();
+//    }
+
+    //加载等待页面
+    function loading_cqcp590409() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590409() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590409_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590409_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590409_searchDiv">
+            <form id="ui_cqcp590409_searchForm" method="post" target="ui_cqcp590409_rptframe" action="aspx/cqcp590409.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>查询日期:</th>
+                    <td><input id="ui_cqcp590409_begdateFilter" name="ui_cqcp590409_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/>
+                        -
+                        <input id="ui_cqcp590409_enddateFilter" name="ui_cqcp590409_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/></td>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590409_factidFilter" name="ui_cqcp590409_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:140px;" prompt="全选"></select></td>
+                    <th>图表类型:</th>
+                    <td>
+                        <select id="ui_cqcp590409_typeFilter" name="ui_cqcp590409_typeFilter"
+                            class="easyui-combobox" style="width: 100px;" editable="false" >
+                            <option value="1">条形图</option>
+                            <option value="2">饼图</option>
+                        </select></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590409_searchA" onClick="javascript:loading_cqcp590409();ui_cqcp590409_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true" style="visibility:hidden"
+                                id="ui_cqcp590409_printA" onclick="print_cqcp590409()" style="visibility:hidden">打印</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590409_rptframe" name="ui_cqcp590409_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590206_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //初始化
+        var date_590206 = new Date();
+        var yy_590206 = date_590206.getFullYear();
+        var mm_590206 = date_590206.getMonth() + 2;
+        var datestr_590206 = yy_590206 + '-' + (mm_590206 < 10 ? '0' + mm_590206 : mm_590206)
+        $("#ui_cqcp590206_yymmFilter").val(datestr_590206);
+
+        //datebox年月格式化
+        $('#ui_cqcp590206_yymmFilter').datebox({
+            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                    tds = p.find('div.calendar-menu-month-inner td');
+                    tds.click(function (e) {
+                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                        var year = /\d{4}/.exec(span.html())[0] //得到年份
+                        , month = parseInt($(this).attr('abbr'), 10) + 1; //月份
+                        if (month == 13) {
+                            year = parseInt(year) + 1;
+                            month = 1;
+                        }
+
+                        $('#ui_cqcp590206_yymmFilter').datebox('hidePanel')//隐藏日期对象
+                        .datebox('setValue', year + '-' + month); //设置日期的值
+                    });
+                }, 0)
+            },
+            parser: function (s) {//配置parser，返回选择的日期
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                if (d.getMonth() == 0) {
+                    return (d.getFullYear() - 1) + '-' + 12;
+                }
+                else {
+                    return d.getFullYear() + '-' + d.getMonth();
+                }
+            } //配置formatter，只返回年月
+        });
+        var p = $('#ui_cqcp590206_yymmFilter').datebox('panel'), //日期选择对象
+            tds = false, //日期选择对象中月份
+            span = p.find('span.calendar-text'); //显示月份层的触发控件
+        
+    });
+
+    //打印
+//    function print_cqcp590206() {
+//        $("#ui_cqcp590206_rptframe").contents().find("#btn_print").click();
+//    }
+
+    //加载等待页面
+    function loading_cqcp590206() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590206() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590206_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590206_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590206_searchDiv">
+            <form id="ui_cqcp590206_searchForm" method="post" target="ui_cqcp590206_rptframe" action="aspx/cqcp590206.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>年月:</th>
+                    <td><input id="ui_cqcp590206_yymmFilter" name="ui_cqcp590206_yymmFilter" 
+                                class="easyui-datebox" style="width:140px;" editable="false" /></td>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590206_factidFilter" name="ui_cqcp590206_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:150px;" prompt="全选"></select></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590206_searchA" onClick="javascript:loading_cqcp590206();ui_cqcp590206_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true" style="visibility:hidden"
+                                id="ui_cqcp590206_printA" onclick="print_cqcp590206()" style="visibility:hidden">打印</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590206_rptframe" name="ui_cqcp590206_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

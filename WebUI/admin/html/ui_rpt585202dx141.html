@@ -1,0 +1,255 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_rpt585202dx141_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 140,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 20 },
+                { field: 'factname', title: '简称', width: 40 },
+                ]],
+            fitColumns: true
+        });
+
+        //合同类别下拉数据
+        $("#ui_rpt585202dx141_ordtypeFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getOrdtype",
+            panelWidth: 140,
+            idField: "code",
+            textField: "name",
+            columns: [[
+                { field: 'code', title: '代号', width: 20 },
+                { field: 'name', title: '类别', width: 30 },
+                ]],
+            fitColumns: true,
+            onLoadSuccess: function () {
+                $("#ui_rpt585202dx141_ordtypeFilter").combogrid('setValue', 'ZZ');
+            }
+        });
+
+        //合同下拉数据
+        $("#ui_rpt585202dx141_ordidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getOrdid",
+            panelWidth: 300,
+            multiple: true,
+            idField: "ordid",
+            textField: "ordid",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'ordid', title: '合同代号', width: 80 },
+                { field: 'ordh12', title: '工程名称', width: 200 },
+                ]],
+            fitColumns: true
+        });
+
+        //初始化
+        var date_585202dx141 = new Date();
+        var yy_585202dx141 = date_585202dx141.getFullYear();
+        var mm_585202dx141 = date_585202dx141.getMonth() + 2;
+        var datestr_585202dx141 = yy_585202dx141 + '-' + (mm_585202dx141 < 10 ? '0' + mm_585202dx141 : mm_585202dx141)
+        $("#ui_rpt585202dx141_yymmFilter").val(datestr_585202dx141);
+
+        //datebox年月格式化
+        $('#ui_rpt585202dx141_yymmFilter').datebox({
+            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                    tds = p.find('div.calendar-menu-month-inner td');
+                    tds.click(function (e) {
+                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                        var year = /\d{4}/.exec(span.html())[0] //得到年份
+                        , month = parseInt($(this).attr('abbr'), 10) + 1; //月份
+                        if (month == 13) {
+                            year = parseInt(year) + 1;
+                            month = 1;
+                        }
+
+                        $('#ui_rpt585202dx141_yymmFilter').datebox('hidePanel')//隐藏日期对象
+                        .datebox('setValue', year + '-' + month); //设置日期的值
+                    });
+                }, 0)
+            },
+            parser: function (s) {//配置parser，返回选择的日期
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                if (d.getMonth() == 0) {
+                    return (d.getFullYear() - 1) + '-' + 12;
+                }
+                else {
+                    return d.getFullYear() + '-' + d.getMonth();
+                }
+            } //配置formatter，只返回年月
+        });
+        var p = $('#ui_rpt585202dx141_yymmFilter').datebox('panel'), //日期选择对象
+            tds = false, //日期选择对象中月份
+            span = p.find('span.calendar-text'); //显示月份层的触发控件
+    });
+
+
+    //展开逻辑
+    var ifcollapsed = 'Y';
+    $("#ui_rpt585202dx141_colltr1").hide();
+    $("#ui_rpt585202dx141_colltr2").hide();
+    $("#ui_rpt585202dx141_colltr3").hide();
+    $("#ui_rpt585202dx141_collLabel2").hide();
+
+    function collapsed_rpt585202dx141() {
+        if (ifcollapsed == 'N') {
+            $("#ui_rpt585202dx141_SDiv").height(39);
+            $("#ui_rpt585202dx141_colltr1").hide();
+            $("#ui_rpt585202dx141_colltr2").hide();
+            $("#ui_rpt585202dx141_colltr3").hide();
+            $("#ui_rpt585202dx141_collLabel2").hide();
+            $("#ui_rpt585202dx141_collLabel1").show();
+            ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_rpt585202dx141_SDiv").height(105)
+            $("#ui_rpt585202dx141_colltr1").show();
+            $("#ui_rpt585202dx141_colltr2").show();
+            $("#ui_rpt585202dx141_colltr3").show();
+            $("#ui_rpt585202dx141_collLabel1").hide();
+            $("#ui_rpt585202dx141_collLabel2").show();
+            ifcollapsed = 'N';
+        }
+    }
+
+
+    //打印
+    function print_rpt585202dx141() {
+        $("#ui_rpt585202dx141_rptframe").contents().find("#btn_print").click();
+    }
+
+    //加载等待页面
+    function loading_rpt585202dx141() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_rpt585202dx141() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+    //    function detail_rpt585202dx141(compid, factid, sdate, user) {
+    //        if ($('#tabs').tabs('exists', "出货实时查询(明细)")) {
+    //            $('#tabs').tabs('close', "出货实时查询(明细)");
+    //        }
+    //        $('#ui_rpt585202dx141_compidTrans').val(compid);
+    //        $('#ui_rpt585202dx141_factidTrans').val(factid);
+    //        $('#ui_rpt585202dx141_sdateTrans').val(sdate);
+    //        $('#ui_rpt585202dx141_userTrans').val(user);
+    //        addTab("出货实时查询(明细)", "html/ui_rpt585202dx141st2.html", "");
+    //    }
+</script>
+
+<div id="ui_rpt585202dx141_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <!--<div id="ui_loading_dialog" name="robin"></div>-->
+    <%--查询条件--%>
+    <div id="ui_rpt585202dx141_SDiv" data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_rpt585202dx141_searchDiv">
+            <form id="ui_rpt585202dx141_searchForm" method="post" target="ui_rpt585202dx141_rptframe" action="aspx/rpt585202dx141.aspx">
+                <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                    <tr>
+                        <th style="width:70px;">查询年月:</th>
+                        <td><input id="ui_rpt585202dx141_yymmFilter" name="ui_rpt585202dx141_yymmFilter" 
+                                class="easyui-datebox" style="width:140px;" editable="false" /></td>
+                        <th style="width:70px;">厂别:</th>
+                        <td>
+                            <select id="ui_rpt585202dx141_factidFilter" name="ui_rpt585202dx141_factidFilter" 
+                                class="easyui-combogrid" style="width:140px;" prompt="全部" editable="false"></select></td>
+                        <th style="width:70px;">合同类别:</th>
+                        <td>
+                            <select id="ui_rpt585202dx141_ordtypeFilter" name="ui_rpt585202dx141_ordtypeFilter"
+                                class="easyui-combogrid" style="width:140px;" editable="false"></select></td>
+                        <th style="width:70px;">结案否:</th>
+                        <td>
+                            <select id="ui_rpt585202dx141_rdltypeFilter" name="ui_rpt585202dx141_rdltypeFilter"
+                                class="easyui-combobox" style="width: 140px;" editable="false" >
+                                <option value="ZZ">全部</option>
+                                <option value="1">结案</option>
+                                <option value="0">未结案</option>
+                                </select></td>
+                        <td>
+                            <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                    id="ui_rpt585202dx141_searchA" onClick="javascript:loading_rpt585202dx141();ui_rpt585202dx141_searchForm.submit();" >查询</a></td>
+                        <td>
+                            <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                    id="ui_rpt585202dx141_printA" onclick="print_rpt585202dx141();">打印</a></td>
+                        <td>
+                            <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                    id="ui_rpt585202dx141_collapsedA" onclick="collapsed_rpt585202dx141()">
+                                    <label id="ui_rpt585202dx141_collLabel1">展开</label>
+                                    <label id="ui_rpt585202dx141_collLabel2">收起</label></a></td>
+                    </tr>
+                    <tr id="ui_rpt585202dx141_colltr1">
+                        <th style="width:70px;">合同:</th>
+                        <td><select id="ui_rpt585202dx141_ordidFilter" name="ui_rpt585202dx141_ordidFilter" 
+                                class="easyui-combogrid" style="width:140px;" prompt=""></select></td>
+                        <th style="width:70px;">工程名称:</th>
+                        <td><input id="ui_rpt585202dx141_ordh12Filter" name="ui_rpt585202dx141_ordh12Filter"
+                                class="easyui-textbox" style="width:140px;" prompt="按工程名称模糊过滤.."/></td>
+                        <th style="width:70px;">客户:</th>
+                        <td><input id="ui_rpt585202dx141_custidFilter" name="ui_rpt585202dx141_custidFilter"
+                                class="easyui-textbox" style="width:140px;" prompt="按客户名称模糊过滤.."/></td>
+                        <th style="width:70px;">业务员:</th>
+                        <td><input id="ui_rpt585202dx141_empidFilter" name="ui_rpt585202dx141_empidFilter"
+                                class="easyui-textbox" style="width:140px;" prompt="按业务员名称模糊过滤.."/></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr id="ui_rpt585202dx141_colltr2">
+                        <th style="width:70px;">收款进度:</th>
+                        <td><select id="ui_rpt585202dx141_skjdMarkFilter" name="ui_rpt585202dx141_skjdMarkFilter"
+                                class="easyui-combobox" style="width: 40px;" editable="false">
+                                <option value="0">=</option>
+                                <option value="1">></option>
+                                <option value="2"><</option></select>
+                            <input id="ui_rpt585202dx141_skjdAmtFilter" name="ui_rpt585202dx141_skjdAmtFilter"
+                                class="easyui-numberbox" style="width: 93px;" prompt="请输入数字.."/></td>
+                        <th style="width:70px;">累计欠款:</th>
+                        <td><select id="ui_rpt585202dx141_ljqkMarkFilter" name="ui_rpt585202dx141_ljqkMarkFilter"
+                                class="easyui-combobox" style="width: 40px;" editable="false">
+                                <option value="0">=</option>
+                                <option value="1">></option>
+                                <option value="2"><</option></select>
+                            <input id="ui_rpt585202dx141_ljqkAmtFilter" name="ui_rpt585202dx141_ljqkAmtFilter"
+                                class="easyui-numberbox" style="width: 93px;" prompt="请输入数字.."/></td>
+                        <th></th>
+                        <td></td>
+                        <th></th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_rpt585202dx141_rptframe" name="ui_rpt585202dx141_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

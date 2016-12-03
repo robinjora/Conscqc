@@ -1,0 +1,137 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590405_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //企业下拉数据
+        $("#ui_cqcp590405_bujinoFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getBujino",
+            panelWidth: 100,
+            multiple: true,
+            idField: "bujino",
+            textField: "bujino",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'bujino', title: '机别', width: 100 }
+                ]],
+            fitColumns: true
+        });
+
+        //查询日期初始化
+        var date_cqcp590405 = new Date();
+        var yy_cqcp590405 = date_cqcp590405.getFullYear();
+        var mm_cqcp590405 = date_cqcp590405.getMonth() + 1;
+        var dd_cqcp590405 = date_cqcp590405.getDate();
+        var datestr_cqcp590405 = yy_cqcp590405 + '-' + (mm_cqcp590405 < 10 ? '0' + mm_cqcp590405 : mm_cqcp590405)
+                                  + '-' + (dd_cqcp590405 < 10 ? '0' + dd_cqcp590405 : dd_cqcp590405);
+        var date_cqcp590405_2 = DateAdd('d', -15, date_cqcp590405);
+        
+        var yy_cqcp590405_2 = date_cqcp590405_2.getFullYear();
+        var mm_cqcp590405_2 = date_cqcp590405_2.getMonth() + 1;
+        var dd_cqcp590405_2 = date_cqcp590405_2.getDate() + 1;
+        var datestr_cqcp590405_2 = yy_cqcp590405_2 + '-' + (mm_cqcp590405_2 < 10 ? '0' + mm_cqcp590405_2 : mm_cqcp590405_2)
+                                  + '-' + (dd_cqcp590405_2 < 10 ? '0' + dd_cqcp590405_2 : dd_cqcp590405_2);
+        $("#ui_cqcp590405_begdateFilter").val(datestr_cqcp590405_2);
+        $("#ui_cqcp590405_enddateFilter").val(datestr_cqcp590405);
+
+    });
+
+    //打印
+    function print_cqcp590405() {
+        $("#ui_cqcp590405_rptframe").contents().find("#btn_print").click();
+    }
+
+    //加载等待页面
+    function loading_cqcp590405() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590405() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+
+    function DateAdd(interval, number, date) {
+        //确保为date类型:  
+        //date = convertToDate(date);
+        switch (interval.toLowerCase()) {
+            case "y": return new Date(date.setFullYear(date.getFullYear() + number));
+            case "m": return new Date(date.setMonth(date.getMonth() + number));
+            case "d": return new Date(date.setDate(date.getDate() + number));
+            case "w": return new Date(date.setDate(date.getDate() + 7 * number));
+            case "h": return new Date(date.setHours(date.getHours() + number));
+            case "n": return new Date(date.setMinutes(date.getMinutes() + number));
+            case "s": return new Date(date.setSeconds(date.getSeconds() + number));
+            case "l": return new Date(date.setMilliseconds(date.getMilliseconds() + number));
+        }
+    }
+</script>
+
+<div id="ui_cqcp590405_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590405_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590405_searchDiv">
+            <form id="ui_cqcp590405_searchForm" method="post" target="ui_cqcp590405_rptframe" action="aspx/cqcp590405.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>查询日期:</th>
+                    <td><input id="ui_cqcp590405_begdateFilter" name="ui_cqcp590405_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/>
+                        -
+                        <input id="ui_cqcp590405_enddateFilter" name="ui_cqcp590405_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/></td>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590405_factidFilter" name="ui_cqcp590405_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:140px;" prompt="全选"></select></td>
+                    <th>排序:</th>
+                    <td>
+                        <select id="ui_cqcp590405_sortFilter" name="ui_cqcp590405_sortFilter"
+                            class="easyui-combobox" style="width: 100px;" editable="false" >
+                            <option value="1">依方量</option>
+                            <option value="2">依厂别</option>
+                        </select></td>
+                    <th>机别:</th>
+                    <td><select id="ui_cqcp590405_bujinoFilter" name="ui_cqcp590405_bujinoFilter" class="easyui-combogrid" 
+                                editable="false" style="width:100px;" prompt="全选"></select></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590405_searchA" onClick="javascript:loading_cqcp590405();ui_cqcp590405_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590405_printA" onclick="print_cqcp590405()" style="visibility:hidden">打印</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590405_rptframe" name="ui_cqcp590405_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿<script type="text/javascript">
+    $('#ui_ordh_edit_fileupload_upload').filebox({
+        prompt: '文件路径...',
+        buttonText: '选择文件',
+        onChange: function () {
+            var address = $('#ui_ordh_edit_fileupload_upload').filebox("getValue");
+            var fileatrs = address.split("\\");
+            var filename = fileatrs[fileatrs.length - 1];
+            $('#ui_ordh_edit_fileupload_filename').textbox("setValue", filename);
+        }
+    })
+</script>
+
+<div style="padding: 15px; overflow: hidden">
+    <form id="ui_ordhedit_fileupload_form" method="post" action="" enctype="multipart/form-data">
+    <table class="tableForm" width="100%">
+        <tr>
+            <th>
+                文件选择：
+            </th>
+            <td>
+                <input name="ui_ordh_edit_fileupload_upload" id="ui_ordh_edit_fileupload_upload" class="easyui-filebox" style="width: 300px" />
+            </td>
+        </tr>
+        <tr>
+            <th>
+                文件名称：
+            </th>
+            <td>
+                <input name="ui_ordh_edit_fileupload_filename" id="ui_ordh_edit_fileupload_filename" class="easyui-textbox" autocomplete="off" />
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="ui_ordhedit_fileupload_compid" id="ui_ordhedit_fileupload_compid" />
+    <input type="hidden" name="ui_ordhedit_fileupload_factid" id="ui_ordhedit_fileupload_factid" />
+    <input type="hidden" name="ui_ordhedit_fileupload_ordid" id="ui_ordhedit_fileupload_ordid" />
+    </form>
+</div>

@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+    <title>质检站二维码验证</title>
+    <script src="../jquery-easyui-1.4.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../jquery-easyui-1.4.1/jquery.easyui.min.js" type="text/javascript"></script>
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1' /> 
+    <style type="text/css">
+        .code
+        {
+            background-color: White;
+            font-family: Arial;
+            font-style: italic;
+            color: Red;
+            border: 0;
+            padding: 2px 3px;
+            letter-spacing: 3px;
+            font-weight: bolder;
+            cursor: pointer;
+            width: 60px;
+        }
+        .unchanged
+        {
+            border: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            createCode();  //创建验证码
+        })
+
+        function checkClick() {
+            if (checkInput()) {
+                uaredirect('http://localhost/NTXH2/admin/QRCode/QRcodeHandle.ashx?qrCode=5E756E181A87F9EDCCA42ED17ABD3645&qrCode2=55546965&action=check');
+            }
+        }
+
+        //创建验证码
+        var code;
+        function createCode() {
+            code = "";
+            var codeLength = 4;     //验证码长度   
+            var qrCode_checkCode = document.getElementById("qrCode_checkCode");
+            var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+            for (var i = 0; i < codeLength; i++) {
+                var charIndex = Math.floor(Math.random() * 10);
+                code += selectChar[charIndex];
+            }
+            if (qrCode_checkCode) {
+                qrCode_checkCode.className = "code";
+                qrCode_checkCode.value = code;
+                //$("#qrCode_VfCode").val(code);   //自动填写验证码
+            }
+        }
+
+        //检查验证码
+        function checkInput() {
+            if ($.trim($("#qrCode_VfCode").val()) == "") {
+                $("#qrCode_msg").val("验证码不能为空!");
+                $("#qrCode_VfCode").val("").focus();
+                return false;
+            }
+            else if (document.getElementById("qrCode_VfCode").value.toUpperCase() != code) {
+                $("#qrCode_msg").val("验证码错误！");
+                $("#qrCode_VfCode").val("").focus();
+                createCode();       //刷新验证码
+                return false;
+            } else {
+                $('#loginBtn').linkbutton('disable');
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="qrCodeFrm" method="post">
+        <table align="center">
+                <tr>
+                    <th colspan="2">
+                        请输入验证码：
+                    </th>
+                </tr>
+                <tr>
+                    <label></label>
+                    <td>
+                        <input type="text" id="qrCode_VfCode" autocomplete="off" style="width:80px;" />
+                    </td>
+                    <td>
+                        <input type="text" id="qrCode_checkCode" readonly="readonly" class="unchanged" title="点击刷新验证码" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" id="qrCode_msg" style="border-style: none; color:Red;" readonly="readonly" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="刷新验证码" onclick="createCode();$('#qrCode_VfCode').val('').focus();"/>
+                    </td>
+                    <td>
+                        <input type="button" value="提交" onclick="checkClick();" />
+                    </td>
+                </tr>
+        </table>
+    </form>
+</body>
+</html>

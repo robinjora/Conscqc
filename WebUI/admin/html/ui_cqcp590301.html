@@ -1,0 +1,167 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590301_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //强度下拉数据
+        $("#ui_cqcp590301_strengthFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getStrength",
+            panelWidth: 200,
+            multiple: true,
+            idField: "strength",
+            textField: "strength",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'strength', title: '强度', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //强度下拉数据
+        $("#ui_cqcp590301_daysFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getDays",
+            panelWidth: 200,
+            multiple: true,
+            idField: "days",
+            textField: "days",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'days', title: '龄期', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //查询日期初始化
+        var date_cqcp590301 = new Date();
+        var yy_cqcp590301 = date_cqcp590301.getFullYear();
+        var mm_cqcp590301 = date_cqcp590301.getMonth() + 1;
+        var dd_cqcp590301 = date_cqcp590301.getDate();
+        var datestr_cqcp590301 = yy_cqcp590301 + '-' + (mm_cqcp590301 < 10 ? '0' + mm_cqcp590301 : mm_cqcp590301)
+                                  + '-' + (dd_cqcp590301 < 10 ? '0' + dd_cqcp590301 : dd_cqcp590301);
+        $("#ui_cqcp590301_begdateFilter").val(datestr_cqcp590301);
+        $("#ui_cqcp590301_enddateFilter").val(datestr_cqcp590301);
+    });
+
+    //打印
+    function print_cqcp590301() {
+        $("#ui_cqcp590301_rptframe").contents().find("#btn_print").click();
+    }
+
+    //展开逻辑
+    var ui_cqcp590301_ifcollapsed = 'Y';
+    $("#ui_cqcp590301_colltr").hide();
+    $("#ui_cqcp590301_collLabel2").hide();
+
+    function collapsed_cqcp590301() {
+        if (ui_cqcp590301_ifcollapsed == 'N') {
+            $("#ui_cqcp590301_SDiv").height(39);
+            $("#ui_cqcp590301_colltr").hide();
+            $("#ui_cqcp590301_collLabel2").hide();
+            $("#ui_cqcp590301_collLabel1").show();
+            ui_cqcp590301_ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_cqcp590301_SDiv").height(105)
+            $("#ui_cqcp590301_colltr").show();
+            $("#ui_cqcp590301_collLabel1").hide();
+            $("#ui_cqcp590301_collLabel2").show();
+            ui_cqcp590301_ifcollapsed = 'N';
+        }
+    }
+
+    //加载等待页面
+    function loading_cqcp590301() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590301() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590301_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590301_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590301_searchDiv">
+            <form id="ui_cqcp590301_searchForm" method="post" target="ui_cqcp590301_rptframe" action="aspx/cqcp590301.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <td style="width:80px;">
+                        <select id="ui_cqcp590301_typeFilter" name="ui_cqcp590301_typeFilter"
+                            class="easyui-combobox" style="width: 80px;" editable="false" >
+                            <option value="1">试压日期</option>
+                            <option value="2">成型日期</option>
+                        </select></td>
+                    <td><input id="ui_cqcp590301_begdateFilter" name="ui_cqcp590301_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/>
+                                -
+                        <input id="ui_cqcp590301_enddateFilter" name="ui_cqcp590301_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/></td>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590301_factidFilter" name="ui_cqcp590301_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:145px;" prompt="全选"></select></td>
+                    <th>工程名称:</th>
+                    <td><input id="ui_cqcp590301_engnameFilter" name="ui_cqcp590301_engnameFilter" class="easyui-textbox"
+                                style="width:145px;" prompt="按工程名称模糊过滤.." /></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590301_searchA" onClick="javascript:loading_cqcp590301();ui_cqcp590301_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590301_printA" onclick="print_cqcp590301()" style="visibility:hidden">打印</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                id="ui_cqcp590301_collapsedA" onclick="collapsed_cqcp590301()">
+                                <label id="ui_cqcp590301_collLabel1">展开</label>
+                                <label id="ui_cqcp590301_collLabel2">收起</label></a></td>
+                </tr>
+                <tr id="ui_cqcp590301_colltr">
+                    <th>强度:</th>
+                    <td><select id="ui_cqcp590301_strengthFilter" name="ui_cqcp590301_strengthFilter" class="easyui-combogrid" 
+                                editable="true" style="width:145px;" prompt="全选"></select></td>
+                    <th>配比:</th>
+                    <td><input id="ui_cqcp590301_formulaidFilter" name="ui_cqcp590301_formulaidFilter"
+                            class="easyui-textbox" style="width:145px;" prompt="按配比模糊过滤.."/></td>
+                    <th>龄期:</th>
+                    <td><select id="ui_cqcp590301_daysFilter" name="ui_cqcp590301_daysFilter" class="easyui-combogrid" 
+                                editable="false" style="width:145px;" prompt="全选"></select></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590301_rptframe" name="ui_cqcp590301_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

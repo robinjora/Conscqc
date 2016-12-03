@@ -1,0 +1,144 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590205_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //查询日期初始化
+        var date_cqcp590205 = new Date();
+        var yy_cqcp590205 = date_cqcp590205.getFullYear();
+        var mm_cqcp590205 = date_cqcp590205.getMonth() + 1;
+        var dd_cqcp590205 = date_cqcp590205.getDate();
+        var datestr_cqcp590205 = yy_cqcp590205 + '-' + (mm_cqcp590205 < 10 ? '0' + mm_cqcp590205 : mm_cqcp590205)
+                                  + '-' + (dd_cqcp590205 < 10 ? '0' + dd_cqcp590205 : dd_cqcp590205);
+        $("#ui_cqcp590205_begdateFilter").val(datestr_cqcp590205);
+        $("#ui_cqcp590205_enddateFilter").val(datestr_cqcp590205);
+    });
+
+
+    //打印
+    function print_cqcp590205() {
+        $("#ui_cqcp590205_rptframe").contents().find("#btn_print").click();
+    }
+
+    //展开逻辑
+    var ui_cqcp590205_ifcollapsed = 'Y';
+    $("#ui_cqcp590205_colltr").hide();
+    $("#ui_cqcp590205_collLabel2").hide();
+
+    function collapsed_cqcp590205() {
+        if (ui_cqcp590205_ifcollapsed == 'N') {
+            $("#ui_cqcp590205_SDiv").height(39);
+            $("#ui_cqcp590205_colltr").hide();
+            $("#ui_cqcp590205_collLabel2").hide();
+            $("#ui_cqcp590205_collLabel1").show();
+            ui_cqcp590205_ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_cqcp590205_SDiv").height(78)
+            $("#ui_cqcp590205_colltr").show();
+            $("#ui_cqcp590205_collLabel1").hide();
+            $("#ui_cqcp590205_collLabel2").show();
+            ui_cqcp590205_ifcollapsed = 'N';
+        }
+    }
+
+    //钻取页面
+    function detail_cqcp590205(compid, factid) {
+        if ($('#tabs').tabs('exists', "试验室人员情况查询(明细)")) {
+            $('#tabs').tabs('close', "试验室人员情况查询(明细)");
+        }
+        $('#ui_cqcp590205_compidTrans').val(compid);
+        $('#ui_cqcp590205_factidTrans').val(factid);
+        addTab("试验室人员情况查询(明细)", "html/ui_cqcp590205_st1.html", "");
+    }
+
+    //加载等待页面
+    function loading_cqcp590205() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590205() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590205_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590205_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590205_searchDiv">
+            <form id="ui_cqcp590205_searchForm" method="post" target="ui_cqcp590205_rptframe" action="aspx/cqcp590205.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th style="width:80px;">查询日期:</th>
+                    <td><input id="ui_cqcp590205_begdateFilter" name="ui_cqcp590205_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:110px;" data-options="required:true"/>
+                            -
+                        <input id="ui_cqcp590205_enddateFilter" name="ui_cqcp590205_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:110px;" data-options="required:true"/></td>
+                    <th style="width:70px;">企业:</th>
+                    <td><select id="ui_cqcp590205_factidFilter" name="ui_cqcp590205_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:145px;" prompt="全选"></select></td>
+                    <th>工程名称:</th>
+                    <td><input id="ui_cqcp590205_ordh12Filter" name="ui_cqcp590205_ordh12Filter" class="easyui-textbox"
+                                style="width:150px;" prompt="按工程名称模糊过滤.." /></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590205_searchA" onClick="javascript:loading_cqcp590205();ui_cqcp590205_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590205_printA" onclick="print_cqcp590205()" style="visibility:hidden">打印</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                id="ui_cqcp590205_collapsedA" onclick="collapsed_cqcp590205()">
+                                <label id="ui_cqcp590205_collLabel1">展开</label>
+                                <label id="ui_cqcp590205_collLabel2">收起</label></a></td>
+                </tr>
+                <tr id="ui_cqcp590205_colltr">
+                    <th>合同备案号:</th>
+                    <td><input id="ui_cqcp590205_ordidFilter" name="ui_cqcp590205_ordidFilter" 
+                            class="easyui-textbox" style="width:170px;" prompt="按合同备案号模糊过滤.." /></td>
+                    <th>百分比:</th>
+                    <td><input id="ui_cqcp590205_percentFilter" name="ui_cqcp590205_percentFilter"
+                            class="easyui-numberbox" style="width:145px;" prompt="请输入数字.."/></td>
+                    <th>是否到期:</th>
+                    <td><input type="checkbox" id="ui_cqcp590205_daoqiFilter" name="ui_cqcp590205_daoqiFilter" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590205_rptframe" name="ui_cqcp590205_rptframe" width="100%" height="100%" frameborder="0" />
+        <input type="hidden" id="ui_cqcp590205_compidTrans" />
+        <input type="hidden" id="ui_cqcp590205_factidTrans" />
+    </div>
+</div>

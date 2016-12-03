@@ -1,0 +1,42 @@
+﻿<script type="text/javascript">
+    $(function () {
+        loading_rpt585102dx141st3();
+        $('#ui_rpt585102dx141st3_compidFilter').val($('#ui_rpt585102dx141_compidTrans').val());
+        $('#ui_rpt585102dx141st3_factidFilter').val($('#ui_rpt585102dx141_factidTrans').val());
+        $('#ui_rpt585102dx141st3_sdateFilter').val($('#ui_rpt585102dx141_sdateTrans').val());
+        $('#ui_rpt585102dx141st3_userFilter').val($('#ui_rpt585102dx141_userTrans').val());
+        $('#ui_rpt585102dx141st3_searchForm').submit();
+    });
+
+    //加载等待页面
+    function loading_rpt585102dx141st3() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_rpt585102dx141st3() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<form id="ui_rpt585102dx141st3_searchForm" name="ui_rpt585102dx141st3_searchForm" 
+        method="post" target="ui_rpt585102dx141st3_rptframe" action="aspx/rpt585102dx141st3.aspx">
+    <input id="ui_rpt585102dx141st3_compidFilter" name="ui_rpt585102dx141st3_compidFilter" type="hidden" />
+    <input id="ui_rpt585102dx141st3_factidFilter" name="ui_rpt585102dx141st3_factidFilter" type="hidden" />
+    <input id="ui_rpt585102dx141st3_sdateFilter" name="ui_rpt585102dx141st3_sdateFilter" type="hidden" />
+    <input id="ui_rpt585102dx141st3_userFilter" name="ui_rpt585102dx141st3_userFilter" type="hidden" />
+</form>
+<iframe id="ui_rpt585102dx141st3_rptframe" name="ui_rpt585102dx141st3_rptframe"
+    width="100%" height="100%" frameborder="0" scrolling="no" style="overflow:hidden" />
+

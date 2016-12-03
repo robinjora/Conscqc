@@ -1,0 +1,1114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="cust" EntityType="Model.Store.cust" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="employee" EntityType="Model.Store.employee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fileupload" EntityType="Model.Store.fileupload" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ordb" EntityType="Model.Store.ordb" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ordc" EntityType="Model.Store.ordc" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ordh" EntityType="Model.Store.ordh" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="fk_cust_ref_01_employee" Association="Model.Store.fk_cust_ref_01_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="cust" EntitySet="cust" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="cust">
+          <Key>
+            <PropertyRef Name="custid" />
+          </Key>
+          <Property Name="compid" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="custid" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="longname" Type="varchar" MaxLength="100" />
+          <Property Name="shortname" Type="varchar" MaxLength="50" />
+          <Property Name="addr" Type="varchar" MaxLength="60" />
+          <Property Name="tel" Type="varchar" MaxLength="22" />
+          <Property Name="fax" Type="varchar" MaxLength="22" />
+          <Property Name="invaddr" Type="varchar" MaxLength="60" />
+          <Property Name="uninum" Type="varchar" MaxLength="16" />
+          <Property Name="director" Type="varchar" MaxLength="10" />
+          <Property Name="dbbcall" Type="varchar" MaxLength="15" />
+          <Property Name="dmotel" Type="varchar" MaxLength="15" />
+          <Property Name="contack" Type="varchar" MaxLength="10" />
+          <Property Name="cbbcall" Type="varchar" MaxLength="15" />
+          <Property Name="taxtype" Type="varchar" MaxLength="1" />
+          <Property Name="taxrad" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="crlevel" Type="varchar" MaxLength="1" />
+          <Property Name="empid" Type="varchar" MaxLength="8" />
+          <Property Name="cust11" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="cust12" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="updid" Type="varchar" MaxLength="8" />
+          <Property Name="updtime" Type="datetime" />
+          <Property Name="cmotel" Type="varchar" MaxLength="15" />
+          <Property Name="actdebit" Type="numeric" Precision="10" />
+          <Property Name="actreck" Type="numeric" Precision="10" />
+          <Property Name="invname" Type="varchar" MaxLength="30" />
+          <Property Name="par1" Type="varchar" MaxLength="2" />
+          <Property Name="par2" Type="varchar" MaxLength="2" />
+          <Property Name="par3" Type="varchar" MaxLength="2" />
+          <Property Name="par4" Type="varchar" MaxLength="2" />
+          <Property Name="par5" Type="varchar" MaxLength="2" />
+          <Property Name="cust10" Type="decimal" Precision="2" />
+          <Property Name="cust30" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="custtype" Type="varchar" MaxLength="1" />
+          <Property Name="cust33" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="cust34" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="cust35" Type="decimal" Precision="2" />
+          <Property Name="cust36" Type="varchar" MaxLength="30" />
+          <Property Name="cust37" Type="decimal" Precision="4" />
+          <Property Name="cust38" Type="varchar" MaxLength="1" />
+          <Property Name="cust39" Type="varchar" MaxLength="1" />
+          <Property Name="tel2" Type="varchar" MaxLength="22" />
+          <Property Name="motel" Type="varchar" MaxLength="22" />
+          <Property Name="bbcall" Type="varchar" MaxLength="22" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="postid" Type="varchar" MaxLength="10" />
+          <Property Name="code" Type="varchar" MaxLength="3" />
+          <Property Name="tradcode" Type="varchar" MaxLength="3" />
+          <Property Name="cust13" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="cust14" Type="varchar" MaxLength="1" />
+          <Property Name="cust15" Type="varchar" MaxLength="1" />
+          <Property Name="cust16" Type="varchar" MaxLength="1" />
+          <Property Name="cust17" Type="varchar" MaxLength="3" />
+          <Property Name="cust18" Type="varchar" MaxLength="1" />
+          <Property Name="cust19" Type="varchar" MaxLength="10" />
+          <Property Name="cust20" Type="varchar" MaxLength="15" />
+          <Property Name="cust21" Type="varchar" MaxLength="10" />
+          <Property Name="cust22" Type="varchar" MaxLength="12" />
+          <Property Name="cust23" Type="varchar" MaxLength="20" />
+          <Property Name="cust24" Type="varchar" MaxLength="18" />
+          <Property Name="cust25" Type="decimal" Precision="4" />
+          <Property Name="cust26" Type="decimal" Precision="2" />
+          <Property Name="cust27" Type="varchar" MaxLength="1" />
+          <Property Name="cust28" Type="varchar" MaxLength="10" />
+          <Property Name="cust29" Type="varchar" MaxLength="1" />
+          <Property Name="cust31" Type="varchar" MaxLength="1" />
+          <Property Name="otherbid" Type="varchar" MaxLength="3" />
+          <Property Name="useing" Type="varchar" MaxLength="1" />
+          <Property Name="faxh" Type="varchar" MaxLength="4" />
+          <Property Name="cust40" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="bank10" Type="varchar" MaxLength="20" />
+          <Property Name="tmpempid" Type="varchar" MaxLength="10" />
+          <Property Name="taxregno" Type="varchar" MaxLength="100" />
+          <Property Name="bizlicence" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Name="compid" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="empid" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="deptid" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="empname" Type="varchar" MaxLength="10" />
+          <Property Name="addr" Type="varchar" MaxLength="60" />
+          <Property Name="tel" Type="varchar" MaxLength="20" />
+          <Property Name="motel" Type="varchar" MaxLength="22" />
+          <Property Name="bbcall" Type="varchar" MaxLength="22" />
+          <Property Name="emp11" Type="varchar" MaxLength="8" />
+          <Property Name="emp12" Type="varchar" MaxLength="8" />
+          <Property Name="updid" Type="varchar" MaxLength="8" />
+          <Property Name="updtime" Type="datetime" />
+          <Property Name="jobflag" Type="varchar" MaxLength="12" />
+          <Property Name="posid" Type="varchar" MaxLength="4" />
+          <Property Name="securid" Type="varchar" MaxLength="10" />
+          <Property Name="birthday" Type="varchar" MaxLength="8" />
+          <Property Name="stype" Type="varchar" MaxLength="1" />
+          <Property Name="bloodtype" Type="varchar" MaxLength="1" />
+          <Property Name="addr2" Type="varchar" MaxLength="60" />
+          <Property Name="married" Type="varchar" MaxLength="1" />
+          <Property Name="emp21" Type="varchar" MaxLength="12" />
+          <Property Name="emp22" Type="varchar" MaxLength="20" />
+          <Property Name="emp23" Type="varchar" MaxLength="20" />
+          <Property Name="emp24" Type="varchar" MaxLength="20" />
+          <Property Name="emp25" Type="varchar" MaxLength="20" />
+          <Property Name="emp31" Type="smallint" />
+          <Property Name="emp32" Type="smallint" />
+          <Property Name="emp33" Type="varchar" MaxLength="8" />
+          <Property Name="emp34" Type="varchar" MaxLength="2" />
+          <Property Name="emp35" Type="varchar" MaxLength="8" />
+          <Property Name="emp36" Type="varchar" MaxLength="8" />
+          <Property Name="emp37" Type="varchar" MaxLength="2" />
+          <Property Name="emp38" Type="varchar" MaxLength="8" />
+          <Property Name="emp39" Type="smallint" />
+          <Property Name="emp40" Type="varchar" MaxLength="60" />
+          <Property Name="emp50" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp51" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp52" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp53" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp54" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp55" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp56" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp57" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp58" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="emp59" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="cardid" Type="varchar" MaxLength="30" />
+          <Property Name="emptype" Type="varchar" MaxLength="1" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="contack" Type="varchar" MaxLength="10" />
+          <Property Name="postid" Type="varchar" MaxLength="5" />
+          <Property Name="grade" Type="decimal" Precision="2" />
+          <Property Name="rank" Type="decimal" Precision="2" />
+          <Property Name="insrdate" Type="varchar" MaxLength="8" />
+          <Property Name="bdate" Type="varchar" MaxLength="8" />
+          <Property Name="cardno" Type="varchar" MaxLength="10" />
+          <Property Name="rdate" Type="varchar" MaxLength="8" />
+          <Property Name="ldate" Type="varchar" MaxLength="8" />
+          <Property Name="bankid" Type="varchar" MaxLength="4" />
+          <Property Name="insrid" Type="decimal" Precision="2" />
+          <Property Name="account" Type="varchar" MaxLength="20" />
+          <Property Name="memo" Type="varchar" MaxLength="40" />
+          <Property Name="people" Type="decimal" Precision="2" />
+          <Property Name="tax" Type="decimal" Precision="6" />
+          <Property Name="dorn" Type="varchar" MaxLength="1" />
+          <Property Name="useing" Type="varchar" MaxLength="1" />
+          <Property Name="tiket" Type="int" />
+          <Property Name="brithday" Type="varchar" MaxLength="8" />
+          <Property Name="carid" Type="varchar" MaxLength="10" />
+          <Property Name="identityno" Type="varchar" MaxLength="30" />
+          <Property Name="factid" Type="varchar" MaxLength="2" />
+          <Property Name="emp60" Type="varchar" MaxLength="50" />
+          <Property Name="emp61" Type="varchar" MaxLength="50" />
+          <Property Name="emp62" Type="varchar" MaxLength="50" />
+          <Property Name="emp63" Type="varchar" MaxLength="50" />
+          <Property Name="emp64" Type="varchar" MaxLength="50" />
+          <Property Name="emp65" Type="varchar" MaxLength="50" />
+          <Property Name="emp66" Type="varchar" MaxLength="50" />
+          <Property Name="emp67" Type="varchar" MaxLength="50" />
+          <Property Name="emp68" Type="varchar" MaxLength="50" />
+          <Property Name="emp69" Type="varchar" MaxLength="50" />
+          <Property Name="chk" Type="varchar" MaxLength="1" />
+          <Property Name="pic1" Type="image" />
+          <Property Name="rowver" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="pic2" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="fileupload">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="compid" Type="varchar" MaxLength="2" />
+          <Property Name="factid" Type="varchar" MaxLength="2" />
+          <Property Name="ordid" Type="varchar" MaxLength="20" />
+          <Property Name="filename" Type="varchar" MaxLength="50" />
+          <Property Name="filetype" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ordb">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+            <PropertyRef Name="stgid" />
+          </Key>
+          <Property Name="compid" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="ordid" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="formulaid" Type="varchar" MaxLength="30" />
+          <Property Name="qty" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="uniprice" Type="decimal" Scale="5" />
+          <Property Name="ordb11" Type="varchar" MaxLength="30" />
+          <Property Name="updid" Type="varchar" MaxLength="8" />
+          <Property Name="updtime" Type="datetime" />
+          <Property Name="stgid" Type="varchar" Nullable="false" MaxLength="6" />
+          <Property Name="strength" Type="varchar" MaxLength="6" />
+          <Property Name="ordb12" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordb13" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordb14" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="stdprice" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="chgpondtype" Type="varchar" MaxLength="4" />
+          <Property Name="strengthbase" Type="varchar" MaxLength="6" />
+          <Property Name="chgpercent" Type="decimal" Scale="5" />
+          <Property Name="diffprice" Type="decimal" Scale="5" />
+          <Property Name="nprice" Type="decimal" Scale="5" />
+          <Property Name="fprice" Type="decimal" Scale="5" />
+          <Property Name="sprice" Type="decimal" Scale="5" />
+          <Property Name="lprice" Type="decimal" Scale="5" />
+          <Property Name="pdefymtype" Type="varchar" MaxLength="4" />
+          <Property Name="pdefym" Type="varchar" MaxLength="6" />
+          <Property Name="pdefymnum" Type="int" />
+          <Property Name="useing" Type="varchar" MaxLength="1" />
+          <Property Name="factid" Type="varchar" MaxLength="2" />
+          <Property Name="rowver" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="ordc">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+            <PropertyRef Name="addid" />
+          </Key>
+          <Property Name="compid" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="ordid" Type="char" Nullable="false" MaxLength="12" />
+          <Property Name="addid" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="addmoney" Type="decimal" Scale="5" />
+          <Property Name="updid" Type="char" MaxLength="8" />
+          <Property Name="updtime" Type="datetime" />
+          <Property Name="memo" Type="varchar" MaxLength="200" />
+          <Property Name="useing" Type="varchar" MaxLength="1" />
+          <Property Name="factid" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="ordh">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+          </Key>
+          <Property Name="compid" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="ordid" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="custid" Type="varchar" MaxLength="10" />
+          <Property Name="empid" Type="varchar" MaxLength="8" />
+          <Property Name="orddate" Type="varchar" MaxLength="8" />
+          <Property Name="ordh12" Type="varchar" MaxLength="200" />
+          <Property Name="updid" Type="varchar" MaxLength="8" />
+          <Property Name="updtime" Type="datetime" />
+          <Property Name="ordh13" Type="varchar" MaxLength="100" />
+          <Property Name="memo" Type="varchar" MaxLength="60" />
+          <Property Name="closed" Type="varchar" MaxLength="1" />
+          <Property Name="ordh11" Type="varchar" MaxLength="30" />
+          <Property Name="ordh14" Type="varchar" MaxLength="10" />
+          <Property Name="ordh15" Type="varchar" MaxLength="10" />
+          <Property Name="ordh16" Type="varchar" MaxLength="20" />
+          <Property Name="ordh17" Type="varchar" MaxLength="20" />
+          <Property Name="ordh18" Type="varchar" MaxLength="12" />
+          <Property Name="ordh19" Type="varchar" MaxLength="12" />
+          <Property Name="ordh20" Type="varchar" MaxLength="12" />
+          <Property Name="ordh21" Type="varchar" MaxLength="12" />
+          <Property Name="taxtype" Type="varchar" MaxLength="1" />
+          <Property Name="taxratio" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="ordcust11" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordcust12" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="invh12" Type="varchar" MaxLength="1" />
+          <Property Name="ordh22" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh23" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh24" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh25" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh26" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="regid" Type="varchar" MaxLength="4" />
+          <Property Name="ph13" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="prepay" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh27" Type="varchar" MaxLength="20" />
+          <Property Name="ordh28" Type="varchar" MaxLength="22" />
+          <Property Name="ordh29" Type="varchar" MaxLength="60" />
+          <Property Name="ordh30" Type="varchar" MaxLength="22" />
+          <Property Name="ordh31" Type="varchar" MaxLength="60" />
+          <Property Name="ordh32" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh33" Type="varchar" MaxLength="1" />
+          <Property Name="ordh34" Type="int" />
+          <Property Name="ordh35" Type="varchar" MaxLength="8" />
+          <Property Name="ordh36" Type="varchar" MaxLength="60" />
+          <Property Name="ordh37" Type="varchar" MaxLength="60" />
+          <Property Name="ordh38" Type="varchar" MaxLength="8" />
+          <Property Name="ordh39" Type="varchar" MaxLength="8" />
+          <Property Name="ordh40" Type="varchar" MaxLength="8" />
+          <Property Name="ordh41" Type="varchar" MaxLength="60" />
+          <Property Name="ordchk" Type="varchar" MaxLength="1" />
+          <Property Name="maxamt" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="bsslump" Type="varchar" MaxLength="4" />
+          <Property Name="bsdiam" Type="varchar" MaxLength="4" />
+          <Property Name="addslump" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="adddiam" Type="decimal" Scale="5" />
+          <Property Name="addregn" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="addother" Type="decimal" Scale="5" />
+          <Property Name="custinvid" Type="varchar" MaxLength="10" />
+          <Property Name="subordid" Type="varchar" MaxLength="20" />
+          <Property Name="sured" Type="varchar" MaxLength="2" />
+          <Property Name="maxqty" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh42" Type="varchar" MaxLength="22" />
+          <Property Name="ordh43" Type="varchar" MaxLength="22" />
+          <Property Name="ordh44" Type="varchar" MaxLength="22" />
+          <Property Name="longpond" Type="decimal" Scale="5" />
+          <Property Name="shortpond" Type="decimal" Scale="5" />
+          <Property Name="fixedpond" Type="decimal" Scale="5" />
+          <Property Name="addcarprice" Type="decimal" Scale="5" />
+          <Property Name="slumphigh" Type="varchar" MaxLength="4" />
+          <Property Name="slumplow" Type="varchar" MaxLength="4" />
+          <Property Name="slumpdiff" Type="decimal" Scale="5" />
+          <Property Name="slumprange" Type="varchar" MaxLength="2" />
+          <Property Name="ordtxdate" Type="varchar" MaxLength="8" />
+          <Property Name="workpart" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="varchar" MaxLength="2" />
+          <Property Name="payment" Type="varchar" MaxLength="500" />
+          <Property Name="perc01" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="perc02" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="perc03" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="perc04" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="tmpempid" Type="varchar" MaxLength="8" />
+          <Property Name="ordtype" Type="varchar" MaxLength="2" />
+          <Property Name="ordh45" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh46" Type="decimal" Precision="15" Scale="4" />
+          <Property Name="ordh47" Type="varchar" MaxLength="8" />
+          <Property Name="conid" Type="varchar" MaxLength="10" />
+          <Property Name="chkshiph" Type="varchar" MaxLength="1" />
+          <Property Name="empratio" Type="decimal" Scale="5" />
+          <Property Name="paydate" Type="varchar" MaxLength="10" />
+          <Property Name="managestatus" Type="varchar" MaxLength="255" />
+          <Property Name="orddesc" Type="varchar" MaxLength="255" />
+          <Property Name="ordh48" Type="varchar" MaxLength="30" />
+          <Property Name="chkshipdate" Type="varchar" MaxLength="8" />
+          <Property Name="chkshiptime" Type="varchar" MaxLength="8" />
+          <Property Name="ordstatus" Type="varchar" MaxLength="4" />
+          <Property Name="factid" Type="varchar" MaxLength="2" />
+          <Property Name="ordh80" Type="varchar" MaxLength="100" />
+          <Property Name="ordh81" Type="varchar" MaxLength="100" />
+          <Property Name="ordh82" Type="varchar" MaxLength="100" />
+          <Property Name="ordh83" Type="varchar" MaxLength="100" />
+          <Property Name="rowver" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="fk_cust_ref_01_employee">
+          <End Role="employee" Type="Model.Store.employee" Multiplicity="0..1" />
+          <End Role="cust" Type="Model.Store.cust" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="empid" />
+            </Principal>
+            <Dependent Role="cust">
+              <PropertyRef Name="empid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CqcDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cust" EntityType="Model.cust" />
+          <EntitySet Name="employee" EntityType="Model.employee" />
+          <EntitySet Name="ordb" EntityType="Model.ordb" />
+          <EntitySet Name="ordc" EntityType="Model.ordc" />
+          <EntitySet Name="ordh" EntityType="Model.ordh" />
+          <AssociationSet Name="fk_cust_ref_01_employee" Association="Model.fk_cust_ref_01_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="cust" EntitySet="cust" />
+          </AssociationSet>
+          <EntitySet Name="fileuploads" EntityType="Model.fileupload" />
+        </EntityContainer>
+        <EntityType Name="cust">
+          <Key>
+            <PropertyRef Name="custid" />
+          </Key>
+          <Property Type="String" Name="compid" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="custid" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="longname" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="shortname" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="addr" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tel" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="fax" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="invaddr" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="uninum" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="director" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="dbbcall" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="dmotel" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="contack" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cbbcall" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="taxtype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="taxrad" Precision="5" Scale="2" />
+          <Property Type="String" Name="crlevel" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust11" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="cust12" Precision="15" Scale="4" />
+          <Property Type="String" Name="updid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="updtime" />
+          <Property Type="String" Name="cmotel" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="actdebit" Precision="10" Scale="0" />
+          <Property Type="Decimal" Name="actreck" Precision="10" Scale="0" />
+          <Property Type="String" Name="invname" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="par1" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="par2" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="par3" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="par4" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="par5" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust10" Precision="2" Scale="0" />
+          <Property Type="Decimal" Name="cust30" Precision="15" Scale="4" />
+          <Property Type="String" Name="custtype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust33" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="cust34" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="cust35" Precision="2" Scale="0" />
+          <Property Type="String" Name="cust36" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust37" Precision="4" Scale="0" />
+          <Property Type="String" Name="cust38" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust39" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tel2" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="motel" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bbcall" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="email" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="postid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="code" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tradcode" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust13" Precision="10" Scale="2" />
+          <Property Type="String" Name="cust14" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust15" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust16" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust17" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust18" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust19" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust20" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust21" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust22" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust23" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust24" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust25" Precision="4" Scale="0" />
+          <Property Type="Decimal" Name="cust26" Precision="2" Scale="0" />
+          <Property Type="String" Name="cust27" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust28" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust29" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cust31" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="otherbid" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="useing" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="faxh" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cust40" Precision="15" Scale="4" />
+          <Property Type="String" Name="bank10" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tmpempid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="taxregno" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bizlicence" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employee" Relationship="Model.fk_cust_ref_01_employee" FromRole="cust" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Type="String" Name="compid" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="empid" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="deptid" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="empname" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="addr" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tel" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="motel" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bbcall" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp11" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp12" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="updid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="updtime" />
+          <Property Type="String" Name="jobflag" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="posid" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="securid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="birthday" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="stype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bloodtype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="addr2" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="married" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp21" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp22" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp23" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp24" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp25" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="emp31" />
+          <Property Type="Int16" Name="emp32" />
+          <Property Type="String" Name="emp33" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp34" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp35" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp36" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp37" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp38" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="emp39" />
+          <Property Type="String" Name="emp40" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="emp50" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp51" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp52" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp53" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp54" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp55" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp56" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp57" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp58" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="emp59" Precision="10" Scale="2" />
+          <Property Type="String" Name="cardid" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emptype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="email" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="contack" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="postid" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="grade" Precision="2" Scale="0" />
+          <Property Type="Decimal" Name="rank" Precision="2" Scale="0" />
+          <Property Type="String" Name="insrdate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bdate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cardno" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="rdate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ldate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bankid" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="insrid" Precision="2" Scale="0" />
+          <Property Type="String" Name="account" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="memo" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="people" Precision="2" Scale="0" />
+          <Property Type="Decimal" Name="tax" Precision="6" Scale="0" />
+          <Property Type="String" Name="dorn" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="useing" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="tiket" />
+          <Property Type="String" Name="brithday" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="carid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="identityno" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="factid" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp60" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp61" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp62" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp63" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp64" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp65" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp66" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp67" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp68" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="emp69" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="chk" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Binary" Name="pic1" MaxLength="Max" FixedLength="false" />
+          <Property Type="Binary" Name="rowver" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Binary" Name="pic2" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="cust" Relationship="Model.fk_cust_ref_01_employee" FromRole="employee" ToRole="cust" />
+        </EntityType>
+        <EntityType Name="ordb">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+            <PropertyRef Name="stgid" />
+          </Key>
+          <Property Type="String" Name="compid" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordid" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="formulaid" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="qty" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="uniprice" Precision="18" Scale="5" />
+          <Property Type="String" Name="ordb11" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="updid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="updtime" />
+          <Property Type="String" Name="stgid" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="strength" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ordb12" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordb13" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordb14" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="stdprice" Precision="15" Scale="4" />
+          <Property Type="String" Name="chgpondtype" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="strengthbase" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="chgpercent" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="diffprice" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="nprice" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="fprice" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="sprice" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="lprice" Precision="18" Scale="5" />
+          <Property Type="String" Name="pdefymtype" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="pdefym" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="pdefymnum" />
+          <Property Type="String" Name="useing" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="factid" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Binary" Name="rowver" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="ordc">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+            <PropertyRef Name="addid" />
+          </Key>
+          <Property Type="String" Name="compid" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="ordid" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="addid" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="addmoney" Precision="18" Scale="5" />
+          <Property Type="String" Name="updid" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="updtime" />
+          <Property Type="String" Name="memo" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="useing" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="factid" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ordh">
+          <Key>
+            <PropertyRef Name="compid" />
+            <PropertyRef Name="ordid" />
+          </Key>
+          <Property Type="String" Name="compid" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordid" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="custid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="empid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="orddate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh12" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="updid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="updtime" />
+          <Property Type="String" Name="ordh13" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="memo" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="closed" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh11" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh14" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh15" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh16" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh17" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh18" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh19" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh20" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh21" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="taxtype" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="taxratio" Precision="5" Scale="2" />
+          <Property Type="Decimal" Name="ordcust11" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordcust12" Precision="15" Scale="4" />
+          <Property Type="String" Name="invh12" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ordh22" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordh23" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordh24" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordh25" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordh26" Precision="15" Scale="4" />
+          <Property Type="String" Name="regid" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ph13" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="prepay" Precision="15" Scale="4" />
+          <Property Type="String" Name="ordh27" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh28" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh29" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh30" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh31" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ordh32" Precision="15" Scale="4" />
+          <Property Type="String" Name="ordh33" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ordh34" />
+          <Property Type="String" Name="ordh35" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh36" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh37" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh38" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh39" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh40" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh41" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordchk" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="maxamt" Precision="15" Scale="4" />
+          <Property Type="String" Name="bsslump" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bsdiam" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="addslump" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="adddiam" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="addregn" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="addother" Precision="18" Scale="5" />
+          <Property Type="String" Name="custinvid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="subordid" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="sured" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="maxqty" Precision="15" Scale="4" />
+          <Property Type="String" Name="ordh42" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh43" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh44" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="longpond" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="shortpond" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="fixedpond" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="addcarprice" Precision="18" Scale="5" />
+          <Property Type="String" Name="slumphigh" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="slumplow" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="slumpdiff" Precision="18" Scale="5" />
+          <Property Type="String" Name="slumprange" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordtxdate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="workpart" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="status" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="payment" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="perc01" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="perc02" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="perc03" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="perc04" Precision="15" Scale="4" />
+          <Property Type="String" Name="tmpempid" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordtype" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ordh45" Precision="15" Scale="4" />
+          <Property Type="Decimal" Name="ordh46" Precision="15" Scale="4" />
+          <Property Type="String" Name="ordh47" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="conid" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="chkshiph" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="empratio" Precision="18" Scale="5" />
+          <Property Type="String" Name="paydate" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="managestatus" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="orddesc" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh48" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="chkshipdate" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="chkshiptime" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordstatus" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="factid" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh80" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh81" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh82" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordh83" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Binary" Name="rowver" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="fk_cust_ref_01_employee">
+          <End Type="Model.employee" Role="employee" Multiplicity="0..1" />
+          <End Type="Model.cust" Role="cust" Multiplicity="*" />
+        </Association>
+        <EntityType Name="fileupload">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="compid" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="factid" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ordid" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="filename" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="filetype" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="address" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="CqcDBEntities">
+          <EntitySetMapping Name="cust">
+            <EntityTypeMapping TypeName="Model.cust">
+              <MappingFragment StoreEntitySet="cust">
+                <ScalarProperty Name="bizlicence" ColumnName="bizlicence" />
+                <ScalarProperty Name="taxregno" ColumnName="taxregno" />
+                <ScalarProperty Name="tmpempid" ColumnName="tmpempid" />
+                <ScalarProperty Name="bank10" ColumnName="bank10" />
+                <ScalarProperty Name="cust40" ColumnName="cust40" />
+                <ScalarProperty Name="faxh" ColumnName="faxh" />
+                <ScalarProperty Name="useing" ColumnName="useing" />
+                <ScalarProperty Name="otherbid" ColumnName="otherbid" />
+                <ScalarProperty Name="cust31" ColumnName="cust31" />
+                <ScalarProperty Name="cust29" ColumnName="cust29" />
+                <ScalarProperty Name="cust28" ColumnName="cust28" />
+                <ScalarProperty Name="cust27" ColumnName="cust27" />
+                <ScalarProperty Name="cust26" ColumnName="cust26" />
+                <ScalarProperty Name="cust25" ColumnName="cust25" />
+                <ScalarProperty Name="cust24" ColumnName="cust24" />
+                <ScalarProperty Name="cust23" ColumnName="cust23" />
+                <ScalarProperty Name="cust22" ColumnName="cust22" />
+                <ScalarProperty Name="cust21" ColumnName="cust21" />
+                <ScalarProperty Name="cust20" ColumnName="cust20" />
+                <ScalarProperty Name="cust19" ColumnName="cust19" />
+                <ScalarProperty Name="cust18" ColumnName="cust18" />
+                <ScalarProperty Name="cust17" ColumnName="cust17" />
+                <ScalarProperty Name="cust16" ColumnName="cust16" />
+                <ScalarProperty Name="cust15" ColumnName="cust15" />
+                <ScalarProperty Name="cust14" ColumnName="cust14" />
+                <ScalarProperty Name="cust13" ColumnName="cust13" />
+                <ScalarProperty Name="tradcode" ColumnName="tradcode" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="postid" ColumnName="postid" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="bbcall" ColumnName="bbcall" />
+                <ScalarProperty Name="motel" ColumnName="motel" />
+                <ScalarProperty Name="tel2" ColumnName="tel2" />
+                <ScalarProperty Name="cust39" ColumnName="cust39" />
+                <ScalarProperty Name="cust38" ColumnName="cust38" />
+                <ScalarProperty Name="cust37" ColumnName="cust37" />
+                <ScalarProperty Name="cust36" ColumnName="cust36" />
+                <ScalarProperty Name="cust35" ColumnName="cust35" />
+                <ScalarProperty Name="cust34" ColumnName="cust34" />
+                <ScalarProperty Name="cust33" ColumnName="cust33" />
+                <ScalarProperty Name="custtype" ColumnName="custtype" />
+                <ScalarProperty Name="cust30" ColumnName="cust30" />
+                <ScalarProperty Name="cust10" ColumnName="cust10" />
+                <ScalarProperty Name="par5" ColumnName="par5" />
+                <ScalarProperty Name="par4" ColumnName="par4" />
+                <ScalarProperty Name="par3" ColumnName="par3" />
+                <ScalarProperty Name="par2" ColumnName="par2" />
+                <ScalarProperty Name="par1" ColumnName="par1" />
+                <ScalarProperty Name="invname" ColumnName="invname" />
+                <ScalarProperty Name="actreck" ColumnName="actreck" />
+                <ScalarProperty Name="actdebit" ColumnName="actdebit" />
+                <ScalarProperty Name="cmotel" ColumnName="cmotel" />
+                <ScalarProperty Name="updtime" ColumnName="updtime" />
+                <ScalarProperty Name="updid" ColumnName="updid" />
+                <ScalarProperty Name="cust12" ColumnName="cust12" />
+                <ScalarProperty Name="cust11" ColumnName="cust11" />
+                <ScalarProperty Name="crlevel" ColumnName="crlevel" />
+                <ScalarProperty Name="taxrad" ColumnName="taxrad" />
+                <ScalarProperty Name="taxtype" ColumnName="taxtype" />
+                <ScalarProperty Name="cbbcall" ColumnName="cbbcall" />
+                <ScalarProperty Name="contack" ColumnName="contack" />
+                <ScalarProperty Name="dmotel" ColumnName="dmotel" />
+                <ScalarProperty Name="dbbcall" ColumnName="dbbcall" />
+                <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="uninum" ColumnName="uninum" />
+                <ScalarProperty Name="invaddr" ColumnName="invaddr" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="addr" ColumnName="addr" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="longname" ColumnName="longname" />
+                <ScalarProperty Name="custid" ColumnName="custid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="Model.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="pic2" ColumnName="pic2" />
+                <ScalarProperty Name="rowver" ColumnName="rowver" />
+                <ScalarProperty Name="pic1" ColumnName="pic1" />
+                <ScalarProperty Name="chk" ColumnName="chk" />
+                <ScalarProperty Name="emp69" ColumnName="emp69" />
+                <ScalarProperty Name="emp68" ColumnName="emp68" />
+                <ScalarProperty Name="emp67" ColumnName="emp67" />
+                <ScalarProperty Name="emp66" ColumnName="emp66" />
+                <ScalarProperty Name="emp65" ColumnName="emp65" />
+                <ScalarProperty Name="emp64" ColumnName="emp64" />
+                <ScalarProperty Name="emp63" ColumnName="emp63" />
+                <ScalarProperty Name="emp62" ColumnName="emp62" />
+                <ScalarProperty Name="emp61" ColumnName="emp61" />
+                <ScalarProperty Name="emp60" ColumnName="emp60" />
+                <ScalarProperty Name="factid" ColumnName="factid" />
+                <ScalarProperty Name="identityno" ColumnName="identityno" />
+                <ScalarProperty Name="carid" ColumnName="carid" />
+                <ScalarProperty Name="brithday" ColumnName="brithday" />
+                <ScalarProperty Name="tiket" ColumnName="tiket" />
+                <ScalarProperty Name="useing" ColumnName="useing" />
+                <ScalarProperty Name="dorn" ColumnName="dorn" />
+                <ScalarProperty Name="tax" ColumnName="tax" />
+                <ScalarProperty Name="people" ColumnName="people" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="account" ColumnName="account" />
+                <ScalarProperty Name="insrid" ColumnName="insrid" />
+                <ScalarProperty Name="bankid" ColumnName="bankid" />
+                <ScalarProperty Name="ldate" ColumnName="ldate" />
+                <ScalarProperty Name="rdate" ColumnName="rdate" />
+                <ScalarProperty Name="cardno" ColumnName="cardno" />
+                <ScalarProperty Name="bdate" ColumnName="bdate" />
+                <ScalarProperty Name="insrdate" ColumnName="insrdate" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="postid" ColumnName="postid" />
+                <ScalarProperty Name="contack" ColumnName="contack" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="emptype" ColumnName="emptype" />
+                <ScalarProperty Name="cardid" ColumnName="cardid" />
+                <ScalarProperty Name="emp59" ColumnName="emp59" />
+                <ScalarProperty Name="emp58" ColumnName="emp58" />
+                <ScalarProperty Name="emp57" ColumnName="emp57" />
+                <ScalarProperty Name="emp56" ColumnName="emp56" />
+                <ScalarProperty Name="emp55" ColumnName="emp55" />
+                <ScalarProperty Name="emp54" ColumnName="emp54" />
+                <ScalarProperty Name="emp53" ColumnName="emp53" />
+                <ScalarProperty Name="emp52" ColumnName="emp52" />
+                <ScalarProperty Name="emp51" ColumnName="emp51" />
+                <ScalarProperty Name="emp50" ColumnName="emp50" />
+                <ScalarProperty Name="emp40" ColumnName="emp40" />
+                <ScalarProperty Name="emp39" ColumnName="emp39" />
+                <ScalarProperty Name="emp38" ColumnName="emp38" />
+                <ScalarProperty Name="emp37" ColumnName="emp37" />
+                <ScalarProperty Name="emp36" ColumnName="emp36" />
+                <ScalarProperty Name="emp35" ColumnName="emp35" />
+                <ScalarProperty Name="emp34" ColumnName="emp34" />
+                <ScalarProperty Name="emp33" ColumnName="emp33" />
+                <ScalarProperty Name="emp32" ColumnName="emp32" />
+                <ScalarProperty Name="emp31" ColumnName="emp31" />
+                <ScalarProperty Name="emp25" ColumnName="emp25" />
+                <ScalarProperty Name="emp24" ColumnName="emp24" />
+                <ScalarProperty Name="emp23" ColumnName="emp23" />
+                <ScalarProperty Name="emp22" ColumnName="emp22" />
+                <ScalarProperty Name="emp21" ColumnName="emp21" />
+                <ScalarProperty Name="married" ColumnName="married" />
+                <ScalarProperty Name="addr2" ColumnName="addr2" />
+                <ScalarProperty Name="bloodtype" ColumnName="bloodtype" />
+                <ScalarProperty Name="stype" ColumnName="stype" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="securid" ColumnName="securid" />
+                <ScalarProperty Name="posid" ColumnName="posid" />
+                <ScalarProperty Name="jobflag" ColumnName="jobflag" />
+                <ScalarProperty Name="updtime" ColumnName="updtime" />
+                <ScalarProperty Name="updid" ColumnName="updid" />
+                <ScalarProperty Name="emp12" ColumnName="emp12" />
+                <ScalarProperty Name="emp11" ColumnName="emp11" />
+                <ScalarProperty Name="bbcall" ColumnName="bbcall" />
+                <ScalarProperty Name="motel" ColumnName="motel" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="addr" ColumnName="addr" />
+                <ScalarProperty Name="empname" ColumnName="empname" />
+                <ScalarProperty Name="deptid" ColumnName="deptid" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordb">
+            <EntityTypeMapping TypeName="Model.ordb">
+              <MappingFragment StoreEntitySet="ordb">
+                <ScalarProperty Name="rowver" ColumnName="rowver" />
+                <ScalarProperty Name="factid" ColumnName="factid" />
+                <ScalarProperty Name="useing" ColumnName="useing" />
+                <ScalarProperty Name="pdefymnum" ColumnName="pdefymnum" />
+                <ScalarProperty Name="pdefym" ColumnName="pdefym" />
+                <ScalarProperty Name="pdefymtype" ColumnName="pdefymtype" />
+                <ScalarProperty Name="lprice" ColumnName="lprice" />
+                <ScalarProperty Name="sprice" ColumnName="sprice" />
+                <ScalarProperty Name="fprice" ColumnName="fprice" />
+                <ScalarProperty Name="nprice" ColumnName="nprice" />
+                <ScalarProperty Name="diffprice" ColumnName="diffprice" />
+                <ScalarProperty Name="chgpercent" ColumnName="chgpercent" />
+                <ScalarProperty Name="strengthbase" ColumnName="strengthbase" />
+                <ScalarProperty Name="chgpondtype" ColumnName="chgpondtype" />
+                <ScalarProperty Name="stdprice" ColumnName="stdprice" />
+                <ScalarProperty Name="ordb14" ColumnName="ordb14" />
+                <ScalarProperty Name="ordb13" ColumnName="ordb13" />
+                <ScalarProperty Name="ordb12" ColumnName="ordb12" />
+                <ScalarProperty Name="strength" ColumnName="strength" />
+                <ScalarProperty Name="stgid" ColumnName="stgid" />
+                <ScalarProperty Name="updtime" ColumnName="updtime" />
+                <ScalarProperty Name="updid" ColumnName="updid" />
+                <ScalarProperty Name="ordb11" ColumnName="ordb11" />
+                <ScalarProperty Name="uniprice" ColumnName="uniprice" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="formulaid" ColumnName="formulaid" />
+                <ScalarProperty Name="ordid" ColumnName="ordid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordc">
+            <EntityTypeMapping TypeName="Model.ordc">
+              <MappingFragment StoreEntitySet="ordc">
+                <ScalarProperty Name="factid" ColumnName="factid" />
+                <ScalarProperty Name="useing" ColumnName="useing" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="updtime" ColumnName="updtime" />
+                <ScalarProperty Name="updid" ColumnName="updid" />
+                <ScalarProperty Name="addmoney" ColumnName="addmoney" />
+                <ScalarProperty Name="addid" ColumnName="addid" />
+                <ScalarProperty Name="ordid" ColumnName="ordid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordh">
+            <EntityTypeMapping TypeName="Model.ordh">
+              <MappingFragment StoreEntitySet="ordh">
+                <ScalarProperty Name="rowver" ColumnName="rowver" />
+                <ScalarProperty Name="ordh83" ColumnName="ordh83" />
+                <ScalarProperty Name="ordh82" ColumnName="ordh82" />
+                <ScalarProperty Name="ordh81" ColumnName="ordh81" />
+                <ScalarProperty Name="ordh80" ColumnName="ordh80" />
+                <ScalarProperty Name="factid" ColumnName="factid" />
+                <ScalarProperty Name="ordstatus" ColumnName="ordstatus" />
+                <ScalarProperty Name="chkshiptime" ColumnName="chkshiptime" />
+                <ScalarProperty Name="chkshipdate" ColumnName="chkshipdate" />
+                <ScalarProperty Name="ordh48" ColumnName="ordh48" />
+                <ScalarProperty Name="orddesc" ColumnName="orddesc" />
+                <ScalarProperty Name="managestatus" ColumnName="managestatus" />
+                <ScalarProperty Name="paydate" ColumnName="paydate" />
+                <ScalarProperty Name="empratio" ColumnName="empratio" />
+                <ScalarProperty Name="chkshiph" ColumnName="chkshiph" />
+                <ScalarProperty Name="conid" ColumnName="conid" />
+                <ScalarProperty Name="ordh47" ColumnName="ordh47" />
+                <ScalarProperty Name="ordh46" ColumnName="ordh46" />
+                <ScalarProperty Name="ordh45" ColumnName="ordh45" />
+                <ScalarProperty Name="ordtype" ColumnName="ordtype" />
+                <ScalarProperty Name="tmpempid" ColumnName="tmpempid" />
+                <ScalarProperty Name="perc04" ColumnName="perc04" />
+                <ScalarProperty Name="perc03" ColumnName="perc03" />
+                <ScalarProperty Name="perc02" ColumnName="perc02" />
+                <ScalarProperty Name="perc01" ColumnName="perc01" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="workpart" ColumnName="workpart" />
+                <ScalarProperty Name="ordtxdate" ColumnName="ordtxdate" />
+                <ScalarProperty Name="slumprange" ColumnName="slumprange" />
+                <ScalarProperty Name="slumpdiff" ColumnName="slumpdiff" />
+                <ScalarProperty Name="slumplow" ColumnName="slumplow" />
+                <ScalarProperty Name="slumphigh" ColumnName="slumphigh" />
+                <ScalarProperty Name="addcarprice" ColumnName="addcarprice" />
+                <ScalarProperty Name="fixedpond" ColumnName="fixedpond" />
+                <ScalarProperty Name="shortpond" ColumnName="shortpond" />
+                <ScalarProperty Name="longpond" ColumnName="longpond" />
+                <ScalarProperty Name="ordh44" ColumnName="ordh44" />
+                <ScalarProperty Name="ordh43" ColumnName="ordh43" />
+                <ScalarProperty Name="ordh42" ColumnName="ordh42" />
+                <ScalarProperty Name="maxqty" ColumnName="maxqty" />
+                <ScalarProperty Name="sured" ColumnName="sured" />
+                <ScalarProperty Name="subordid" ColumnName="subordid" />
+                <ScalarProperty Name="custinvid" ColumnName="custinvid" />
+                <ScalarProperty Name="addother" ColumnName="addother" />
+                <ScalarProperty Name="addregn" ColumnName="addregn" />
+                <ScalarProperty Name="adddiam" ColumnName="adddiam" />
+                <ScalarProperty Name="addslump" ColumnName="addslump" />
+                <ScalarProperty Name="bsdiam" ColumnName="bsdiam" />
+                <ScalarProperty Name="bsslump" ColumnName="bsslump" />
+                <ScalarProperty Name="maxamt" ColumnName="maxamt" />
+                <ScalarProperty Name="ordchk" ColumnName="ordchk" />
+                <ScalarProperty Name="ordh41" ColumnName="ordh41" />
+                <ScalarProperty Name="ordh40" ColumnName="ordh40" />
+                <ScalarProperty Name="ordh39" ColumnName="ordh39" />
+                <ScalarProperty Name="ordh38" ColumnName="ordh38" />
+                <ScalarProperty Name="ordh37" ColumnName="ordh37" />
+                <ScalarProperty Name="ordh36" ColumnName="ordh36" />
+                <ScalarProperty Name="ordh35" ColumnName="ordh35" />
+                <ScalarProperty Name="ordh34" ColumnName="ordh34" />
+                <ScalarProperty Name="ordh33" ColumnName="ordh33" />
+                <ScalarProperty Name="ordh32" ColumnName="ordh32" />
+                <ScalarProperty Name="ordh31" ColumnName="ordh31" />
+                <ScalarProperty Name="ordh30" ColumnName="ordh30" />
+                <ScalarProperty Name="ordh29" ColumnName="ordh29" />
+                <ScalarProperty Name="ordh28" ColumnName="ordh28" />
+                <ScalarProperty Name="ordh27" ColumnName="ordh27" />
+                <ScalarProperty Name="prepay" ColumnName="prepay" />
+                <ScalarProperty Name="ph13" ColumnName="ph13" />
+                <ScalarProperty Name="regid" ColumnName="regid" />
+                <ScalarProperty Name="ordh26" ColumnName="ordh26" />
+                <ScalarProperty Name="ordh25" ColumnName="ordh25" />
+                <ScalarProperty Name="ordh24" ColumnName="ordh24" />
+                <ScalarProperty Name="ordh23" ColumnName="ordh23" />
+                <ScalarProperty Name="ordh22" ColumnName="ordh22" />
+                <ScalarProperty Name="invh12" ColumnName="invh12" />
+                <ScalarProperty Name="ordcust12" ColumnName="ordcust12" />
+                <ScalarProperty Name="ordcust11" ColumnName="ordcust11" />
+                <ScalarProperty Name="taxratio" ColumnName="taxratio" />
+                <ScalarProperty Name="taxtype" ColumnName="taxtype" />
+                <ScalarProperty Name="ordh21" ColumnName="ordh21" />
+                <ScalarProperty Name="ordh20" ColumnName="ordh20" />
+                <ScalarProperty Name="ordh19" ColumnName="ordh19" />
+                <ScalarProperty Name="ordh18" ColumnName="ordh18" />
+                <ScalarProperty Name="ordh17" ColumnName="ordh17" />
+                <ScalarProperty Name="ordh16" ColumnName="ordh16" />
+                <ScalarProperty Name="ordh15" ColumnName="ordh15" />
+                <ScalarProperty Name="ordh14" ColumnName="ordh14" />
+                <ScalarProperty Name="ordh11" ColumnName="ordh11" />
+                <ScalarProperty Name="closed" ColumnName="closed" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="ordh13" ColumnName="ordh13" />
+                <ScalarProperty Name="updtime" ColumnName="updtime" />
+                <ScalarProperty Name="updid" ColumnName="updid" />
+                <ScalarProperty Name="ordh12" ColumnName="ordh12" />
+                <ScalarProperty Name="orddate" ColumnName="orddate" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="custid" ColumnName="custid" />
+                <ScalarProperty Name="ordid" ColumnName="ordid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="fk_cust_ref_01_employee" TypeName="Model.fk_cust_ref_01_employee" StoreEntitySet="cust">
+            <EndProperty Name="cust">
+              <ScalarProperty Name="custid" ColumnName="custid" />
+            </EndProperty>
+            <EndProperty Name="employee">
+              <ScalarProperty Name="empid" ColumnName="empid" />
+            </EndProperty>
+            <Condition ColumnName="empid" IsNull="false" />
+          </AssociationSetMapping>
+          <EntitySetMapping Name="fileuploads">
+            <EntityTypeMapping TypeName="Model.fileupload">
+              <MappingFragment StoreEntitySet="fileupload">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="filetype" ColumnName="filetype" />
+                <ScalarProperty Name="filename" ColumnName="filename" />
+                <ScalarProperty Name="ordid" ColumnName="ordid" />
+                <ScalarProperty Name="factid" ColumnName="factid" />
+                <ScalarProperty Name="compid" ColumnName="compid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="CqcDB" ZoomLevel="32">
+        <EntityTypeShape EntityType="Model.cust" Width="1.5" PointX="3" PointY="2.75" Height="15.150391438802082" />
+        <EntityTypeShape EntityType="Model.employee" Width="1.5" PointX="0.75" PointY="1.75" Height="17.251608072916675" />
+        <EntityTypeShape EntityType="Model.ordb" Width="1.5" PointX="5.75" PointY="0.75" Height="6.3634855143229174" />
+        <EntityTypeShape EntityType="Model.ordc" Width="1.5" PointX="7.75" PointY="0.75" Height="2.7341113281249996" />
+        <EntityTypeShape EntityType="Model.ordh" Width="1.5" PointX="7.75" PointY="4.75" Height="20.116903483072917" />
+        <AssociationConnector Association="Model.fk_cust_ref_01_employee" >
+          <ConnectorPoint PointX="2.25" PointY="10.325195719401041" />
+          <ConnectorPoint PointX="3" PointY="10.325195719401041" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model.fileupload" Width="1.5" PointX="10.375" PointY="0.75" Height="2.3520719401041674" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,176 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590302_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //查询日期初始化
+        var date_cqcp590302 = new Date();
+        var yy_cqcp590302 = date_cqcp590302.getFullYear();
+        var mm_cqcp590302 = date_cqcp590302.getMonth() + 1;
+        var dd_cqcp590302 = date_cqcp590302.getDate();
+        var datestr_cqcp590302 = yy_cqcp590302 + '-' + (mm_cqcp590302 < 10 ? '0' + mm_cqcp590302 : mm_cqcp590302)
+                                  + '-' + (dd_cqcp590302 < 10 ? '0' + dd_cqcp590302 : dd_cqcp590302);
+        $("#ui_cqcp590302_begdateFilter").val(datestr_cqcp590302);
+        $("#ui_cqcp590302_enddateFilter").val(datestr_cqcp590302);
+
+        $("#ui_cqcp590302_typeFilter").combobox({
+            value: '砂检测',
+            onChange: function (n, o) {
+                if (n == 1 || n == 2) {
+                    $('#ui_cqcp590302_mattype3Filter').textbox('enable');
+                    $('#ui_cqcp590302_sac157Filter').textbox('disable');
+                }
+                else if (n == 3) {
+                    $('#ui_cqcp590302_mattype3Filter').textbox('disable');
+                    $('#ui_cqcp590302_sac157Filter').textbox('enable');
+                }
+                else {
+                    $('#ui_cqcp590302_mattype3Filter').textbox('disable');
+                    $('#ui_cqcp590302_sac157Filter').textbox('disable');
+                }
+            }
+        });
+    });
+
+    //打印
+    function print_cqcp590302() {
+        $("#ui_cqcp590302_rptframe").contents().find("#btn_print").click();
+    }
+
+    //展开逻辑
+    var ui_cqcp590302_ifcollapsed = 'Y';
+    $("#ui_cqcp590302_colltr").hide();
+    $("#ui_cqcp590302_colltr2").hide();
+    $("#ui_cqcp590302_collLabel2").hide();
+
+    function collapsed_cqcp590302() {
+        if (ui_cqcp590302_ifcollapsed == 'N') {
+            $("#ui_cqcp590302_SDiv").height(39);
+            $("#ui_cqcp590302_colltr").hide();
+            //$("#ui_cqcp590302_colltr2").hide();
+            $("#ui_cqcp590302_collLabel2").hide();
+            $("#ui_cqcp590302_collLabel1").show();
+            ui_cqcp590302_ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_cqcp590302_SDiv").height(78)
+            $("#ui_cqcp590302_colltr").show();
+            //$("#ui_cqcp590302_colltr2").show();
+            $("#ui_cqcp590302_collLabel1").hide();
+            $("#ui_cqcp590302_collLabel2").show();
+            ui_cqcp590302_ifcollapsed = 'N';
+        }
+    }
+
+    //加载等待页面
+    function loading_cqcp590302() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590302() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590302_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590302_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590302_searchDiv">
+            <form id="ui_cqcp590302_searchForm" method="post" target="ui_cqcp590302_rptframe" action="aspx/cqcp590302.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>报告日期:</th>
+                    <td><input id="ui_cqcp590302_begdateFilter" name="ui_cqcp590302_begdateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/>
+                        -
+                        <input id="ui_cqcp590302_enddateFilter" name="ui_cqcp590302_enddateFilter" class="easyui-datebox" 
+                                editable="true" style="width:120px;" data-options="required:true"/></td>
+                    <th style="width:70px">企业:</th>
+                    <td><select id="ui_cqcp590302_factidFilter" name="ui_cqcp590302_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:145px;" prompt="全选"></select></td>
+                    <th>检测类别:</th>
+                    <td><select id="ui_cqcp590302_typeFilter" name="ui_cqcp590302_typeFilter"
+                             class="easyui-combobox" style="width: 100px;" editable="false" >
+                            <option value="1">砂检测</option>
+                            <option value="2">石检测</option>
+                            <option value="3">水泥检测</option>
+                            <option value="4">矿粉检测</option>
+                            <option value="5">粉煤灰检测</option>
+                            <option value="6">外加剂</option>
+                        </select></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590302_searchA" onClick="javascript:loading_cqcp590302();ui_cqcp590302_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590302_printA" onclick="print_cqcp590302()" style="visibility:hidden">打印</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                id="ui_cqcp590302_collapsedA" onclick="collapsed_cqcp590302()">
+                                <label id="ui_cqcp590302_collLabel1">展开</label>
+                                <label id="ui_cqcp590302_collLabel2">收起</label></a></td>
+                </tr>
+                <tr id="ui_cqcp590302_colltr">
+                    <th>品种:</th>
+                    <td><input id="ui_cqcp590302_mattype2Filter" name="ui_cqcp590302_mattype2Filter"
+                            class="easyui-textbox" style="width:145px;" prompt="按品种模糊过滤.."/></td>
+                    <th>规格:</th>
+                    <td><input id="ui_cqcp590302_mattype3Filter" name="ui_cqcp590302_mattype3Filter"
+                            class="easyui-textbox" style="width:145px;" prompt="按规格模糊过滤.."/></td>
+                    <th>合格否:</th>
+                    <td><input type="checkbox" id="ui_cqcp590302_resultFilter" name="ui_cqcp590302_resultFilter" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="ui_cqcp590302_colltr2">
+                    <th>供应商:</th>
+                    <td><input id="ui_cqcp590302_sac157Filter" name="ui_cqcp590302_sac157Filter"
+                            class="easyui-textbox" style="width:145px;" prompt="按供应商模糊过滤.." disabled="disabled" style="visibility:hidden"/></td>
+                    <th>检测类型:</th>
+                    <td><select id="ui_cqcp590302_cktypeFilter" name="ui_cqcp590302_cktypeFilter"
+                            class="easyui-combobox" style="width: 100px;" editable="false" style="visibility:hidden">
+                            <option value="0">全部</option>
+                            <option value="1">自检</option>
+                            <option value="2">外检</option>
+                            <option value="3">比对</option>
+                            <option value="4">能力验证</option>
+                        </select></td>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590302_rptframe" name="ui_cqcp590302_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

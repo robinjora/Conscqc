@@ -1,0 +1,95 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590103_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //检测类别下拉数据
+        $("#ui_cqcp590103_subcategoryidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getSubcategory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "subcategoryid",
+            textField: "subcategoryname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'subcategoryid', title: '代号', width: 35 },
+                { field: 'subcategoryname', title: '类别名称', width: 85 },
+                ]],
+            fitColumns: true
+        });
+    });
+
+    //打印
+//    function print_cqcp590103() {
+//        $("#ui_cqcp590103_rptframe").contents().find("#btn_print").click();
+//    }
+
+    //加载等待页面
+    function loading_cqcp590103() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590103() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590103_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590103_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590103_searchDiv">
+            <form id="ui_cqcp590103_searchForm" method="post" target="ui_cqcp590103_rptframe" action="aspx/cqcp590103.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>企业:</th>
+                    <td><select id="ui_cqcp590103_factidFilter" name="ui_cqcp590103_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:150px;" prompt="全选"></select></td>
+                    <th>检测类别:</th>
+                    <td><select id="ui_cqcp590103_subcategoryidFilter" name="ui_cqcp590103_subcategoryidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:150px;" prompt="全选"></select></td>
+                    <th>设备名称:</th>
+                    <td><input id="ui_cqcp590103_equnameFilter" name="ui_cqcp590103_equnameFilter"
+                            class="easyui-textbox" style="width:150px;" prompt="按设备名称模糊过滤.."/></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590103_searchA" onClick="javascript:loading_cqcp590103();ui_cqcp590103_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true" style="visibility:hidden"
+                                id="ui_cqcp590103_printA" onclick="print_cqcp590103()" style="visibility:hidden">打印</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590103_rptframe" name="ui_cqcp590103_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

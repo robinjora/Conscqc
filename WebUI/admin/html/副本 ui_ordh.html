@@ -1,0 +1,258 @@
+﻿<script type="text/javascript">
+    //页面初始化
+    $(function () {
+        $.ajax({     //请求当前用户可以操作的按钮
+            url: "ashx/bg_button.ashx?menucode=ordh&pagename=ui_ordh",
+            type: "post",
+            data: { "action": "getbutton" },
+            dataType: "json",
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    var toolbar = getToolBar(data);    //common.js
+                    if (data.browser) {    //判断是否有浏览权限
+                        $("#ui_ordh_dg").datagrid({     //初始化datagrid
+                            url: "ashx/bg_ordh.ashx?action=ordhSearch",
+                            striped: true, rownumbers: true, pagination: true, pageSize: 20, singleSelect: true,
+                            idField: "ordid",  //这个idField必须指定为输出的id，输出的是Id就必须是Id，不能小写
+                            sortName: "ordid",
+                            sortOrder: "desc",
+                            pageList: [10, 20, 40, 60, 80, 100],
+                            frozenColumns: [[
+                                             { width: 70, title: "厂别代号", field: "factid" },
+                                             { width: 100, title: "合同代号", field: "ordid", sortable: true }
+                                           ]],
+                            columns: [[
+                                        { width: 80, field: "orddate", title: "启用日期",
+                                            formatter: function (value, row, index) {
+                                                return value.substr(0, 4) + "-" + value.substr(4, 2) + "-" + value.substr(6, 2);
+                                            }
+                                        },
+                                        { width: 280, field: "ordh12", title: "工程名称",
+                                            formatter: function (value, row, index) {
+                                                return value.length > 12 ? '<span title="' + value + '">' + value + '</span>' : value;
+                                            }
+                                        }
+                                     ]],
+                            toolbar: toolbar.length == 0 ? null : toolbar,   //请求回来的当前用户可以操作的按钮
+                            onDblClickRow: function (rowIndex, rowData) {     //双击行弹框编辑
+                                //被编辑列高亮，其他列去除高亮
+                                $("#ui_ordh_dg").datagrid('clearSelections').datagrid('clearChecked').datagrid('checkRow', rowIndex);
+                                ui_user_edit();
+                            }
+                        });
+                    }
+                    else {
+                        $("#ui_ordh_layout").layout("remove", "north");    //如果没有浏览权限就移除搜索
+                        $.show_warning("提示", "无权限，请联系管理员！");
+                    }
+                } else {
+                    $.show_warning("错误", data.result);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if (textStatus == "timeout") {
+                    $.show_warning("提示", "请求超时，请刷新当前页重试！");
+                }
+                else {
+                    $.show_warning("错误", textStatus + "：" + errorThrown);
+                }
+            }
+        })
+
+        //回车搜索
+        $("#ui_ordh_searchDiv").find("input").on('keyup', function (event) {
+            alert(1);
+            if (event.keyCode == '13') {
+                ui_ordh_searchdata();
+            }
+        })
+    });
+
+    //添加合同
+    function ui_ordh_add() {
+        if ($("#tabs").tabs("exists", "添加合同")) {
+            $("#tabs").tabs("select", "添加合同");
+            $.show_warning("提示", "合同正在编辑中...");
+        }
+        else if ($("#tabs").tabs("exists", "修改合同")) {
+            $("#tabs").tabs("select", "修改合同");
+            $.show_warning("提示", "合同正在编辑中...");
+        }
+        else {
+            $("#ui_ordh_editType").val("A");
+            addTab("添加合同", "html/ui_ordh_edit.html", "");
+        }
+    }
+
+    //修改合同
+    function ui_ordh_edit() {
+        if ($("#tabs").tabs("exists", "添加合同")) {
+            $("#tabs").tabs("select", "添加合同");
+            $.show_warning("提示", "合同正在编辑中...");
+        }
+        else if ($("#tabs").tabs("exists", "修改合同")) {
+            $("#tabs").tabs("select", "修改合同");
+            $.show_warning("提示", "合同正在编辑中...");
+        }
+        else {
+            //判断是否选中数据
+            var row = $("#ui_ordh_dg").datagrid("getSelections");
+            if (row.length < 1) {
+                $.show_warning("提示", "请选择合同");
+                return;
+            }
+            
+            $("#ui_ordh_editType").val("U");
+            $("#ui_ordh_editfactid").val(row[0].factid);
+            $("#ui_ordh_editordid").val(row[0].ordid);
+
+            addTab("修改合同", "html/ui_ordh_edit.html", "");
+        }
+    }
+
+    //删除合同
+    function ui_ordh_delete() {
+        var row = $("#ui_ordh_dg").datagrid("getSelected");
+        if (row == null) {
+            $.show_warning("提示", "请选择合同");
+            return;
+        }
+        var rowIndex = $("#ui_ordh_dg").datagrid("getRowIndex", row) + 1;
+        $.messager.confirm("提示", "确定删除第[" + rowIndex + "]行合同？", function (r) {
+            if (r) {
+                $.ajax({
+                    url: "ashx/bg_ordh.ashx?action=ordhDelete",
+                    data: { "factid": row.factid, "ordid": row.ordid },
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            $.show_warning("提示", data.msg);
+                            $("#ui_ordh_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                        } else {
+                            $.show_warning("提示", data.msg);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //按条件查询
+    function ui_ordh_searchdata() {
+        $("#ui_ordh_dg").datagrid('load', {
+            ui_ordh_ordh12: $("#ui_ordh_searchDiv").find("[name=ui_ordh_ordh12Filter]").val()
+        });
+        $("#ui_ordh_dg").datagrid("clearSelections").datagrid("clearChecked");
+    }
+
+</script>
+<div id="ui_ordh_layout" class="easyui-layout" data-options="fit:true,border:false">
+   <div data-options="region:'east',split:true,border:true,collapsed:true" title="多条件过滤"
+        style="width: 280px;">
+        <div id="ui_user_search">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th>
+                        登录名：
+                    </th>
+                    <td>
+                        <input name="ui_user_userid" autocomplete="off" style="width: 130px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        姓名：
+                    </th>
+                    <td>
+                        <input name="ui_user_username" autocomplete="off" style="width: 130px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        简介：
+                    </th>
+                    <td>
+                        <input name="ui_user_description" autocomplete="off" style="width: 130px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        是否启用：
+                    </th>
+                    <td>
+                        <select name="ui_user_isable">
+                            <option value="select">请选择</option>
+                            <option value="true">已启用</option>
+                            <option value="false">未启用</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        是否改密：
+                    </th>
+                    <td>
+                        <select name="ui_user_ifchangepwd">
+                            <option value="select">请选择</option>
+                            <option value="true">已改密</option>
+                            <option value="false">未改密</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        添加时间：
+                    </th>
+                    <td>
+                        <input name="ui_user_adddatestart" id="ui_user_adddatestart" class="easyui-datetimebox"
+                            editable="false" style="width: 140px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        至：
+                    </th>
+                    <td>
+                        <input name="ui_user_adddateend" id="ui_user_adddateend" class="easyui-datetimebox"
+                            editable="false" style="width: 140px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                            onclick="ui_user_searchdata();">搜索</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-clear" plain="true"
+                            onclick="ui_user_cleardata();">清空条件</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--查询条件-->
+    <div id='ui_ordh_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_ordh_searchDiv">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th style="width:80px;">工程名称:</th>
+                    <td><input name="ui_ordh_ordh12Filter" class="easyui-textbox" 
+                                style="width:150px;" prompt="模糊过滤"></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_ordh_searchBtn" onClick="ui_ordh_searchdata();" >查询</a></td>
+                </tr>
+            </table>
+            <!--参数容器-->
+            <input type="hidden" id="ui_ordh_editType" name="ui_ordh_editType" />
+            <input type="hidden" id="ui_ordh_editfactid" name="ui_ordh_editfactid" />
+            <input type="hidden" id="ui_ordh_editordid" name="ui_ordh_editordid" />
+        </div>
+    </div>
+    <!--ordh数据表-->
+    <div data-options="region:'center',border:false">
+        <table id="ui_ordh_dg" data-options="fit:true,border:false">
+        </table>
+    </div>
+</div>

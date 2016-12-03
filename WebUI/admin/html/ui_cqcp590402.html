@@ -1,0 +1,135 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590402_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //查询日期初始化
+        var date_cqcp590402 = new Date();
+        var yy_cqcp590402 = date_cqcp590402.getFullYear();
+        var mm_cqcp590402 = date_cqcp590402.getMonth() + 1;
+        var dd_cqcp590402 = date_cqcp590402.getDate();
+        var datestr_cqcp590402 = yy_cqcp590402 + '-' + (mm_cqcp590402 < 10 ? '0' + mm_cqcp590402 : mm_cqcp590402)
+                                  + '-' + (dd_cqcp590402 < 10 ? '0' + dd_cqcp590402 : dd_cqcp590402);
+        $("#ui_cqcp590402_begdateFilter").val(datestr_cqcp590402 + ' 00:00:00');
+        $("#ui_cqcp590402_enddateFilter").val(datestr_cqcp590402 + ' 23:59:59');
+    });
+
+    //打印
+    function print_cqcp590402() {
+        $("#ui_cqcp590402_rptframe").contents().find("#btn_print").click();
+    }
+
+    //展开逻辑
+    var ui_cqcp590402_ifcollapsed = 'Y';
+    $("#ui_cqcp590402_colltr").hide();
+    $("#ui_cqcp590402_collLabel2").hide();
+
+    function collapsed_cqcp590402() {
+        if (ui_cqcp590402_ifcollapsed == 'N') {
+            $("#ui_cqcp590402_SDiv").height(39);
+            $("#ui_cqcp590402_colltr").hide();
+            $("#ui_cqcp590402_collLabel2").hide();
+            $("#ui_cqcp590402_collLabel1").show();
+            ui_cqcp590402_ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_cqcp590402_SDiv").height(78)
+            $("#ui_cqcp590402_colltr").show();
+            $("#ui_cqcp590402_collLabel1").hide();
+            $("#ui_cqcp590402_collLabel2").show();
+            ui_cqcp590402_ifcollapsed = 'N';
+        }
+    }
+
+    //加载等待页面
+    function loading_cqcp590402() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }  
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590402() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590402_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590402_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590402_searchDiv">
+            <form id="ui_cqcp590402_searchForm" method="post" target="ui_cqcp590402_rptframe" action="aspx/cqcp590402.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th style="width:70px;">查询日期:</th>
+                    <td><input id="ui_cqcp590402_begdateFilter" name="ui_cqcp590402_begdateFilter" class="easyui-datetimebox" 
+                                editable="true" style="width:145px;" data-options="required:true"/></td>
+                    <td style="width:70px;text-align:center;">-</td>
+                    <td><input id="ui_cqcp590402_enddateFilter" name="ui_cqcp590402_enddateFilter" class="easyui-datetimebox" 
+                                editable="true" style="width:145px;" data-options="required:true"/></td>
+                    <th style="width:70px;">企业:</th>
+                    <td><select id="ui_cqcp590402_factidFilter" name="ui_cqcp590402_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:145px;" prompt="全选"></select></td>
+                    <th style="width:70px;">工程名称:</th>
+                    <td><input id="ui_cqcp590402_engnameFilter" name="ui_cqcp590402_engnameFilter" class="easyui-textbox"
+                                style="width:145px;" prompt="按工程名称模糊过滤.." /></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590402_searchA" onClick="javascript:loading_cqcp590402();ui_cqcp590402_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590402_printA" onclick="print_cqcp590402()" style="visibility:hidden">打印</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                id="ui_cqcp590402_collapsedA" onclick="collapsed_cqcp590402()">
+                                <label id="ui_cqcp590402_collLabel1">展开</label>
+                                <label id="ui_cqcp590402_collLabel2">收起</label></a></td>
+                </tr>
+                <tr id="ui_cqcp590402_colltr">
+                    <th>强度:</th>
+                    <td><select id="ui_cqcp590402_strengthFilter" name="ui_cqcp590402_strengthFilter" 
+                            class="easyui-textbox" style="width:145px;" prompt="按强度模糊过滤.."></select></td>
+                    <th>客户名称:</th>
+                    <td><input id="ui_cqcp590402_custnameFilter" name="ui_cqcp590402_custnameFilter"
+                            class="easyui-textbox" style="width:145px;" prompt="按客户名称模糊过滤.."/></td>
+                    <th>施工部位:</th>
+                    <td><input id="ui_cqcp590402_workpartFilter" name="ui_cqcp590402_workpartFilter"
+                            class="easyui-textbox" style="width:145px;" prompt="按施工部位模糊过滤.."/></td>
+                    <th>车号:</th>
+                    <td><input id="ui_cqcp590402_caridFilter" name="ui_cqcp590402_caridFilter"
+                            class="easyui-textbox" style="width:145px;" prompt="按车号查询.."/></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590402_rptframe" name="ui_cqcp590402_rptframe" width="100%" height="100%" frameborder="0" />
+    </div>
+</div>

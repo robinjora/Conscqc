@@ -1,0 +1,51 @@
+﻿<script type="text/javascript">
+    //企业下拉数据
+    $("#ui_ordhedit_ordbedit_stgid").combogrid({
+        url: "ashx/bg_dddw.ashx?action=getStrength",
+        panelWidth: 180,
+        multiple: false,
+        idField: "strength",
+        textField: "strength",
+        method: 'get',
+        mode: 'remote',
+        columns: [[
+                { field: 'strength', title: '强度', width: 60 }
+                ]],
+        fitColumns: true
+    });
+
+    $("#ui_ordhedit_ordbedit_uniprice").numberbox({
+        formatter: function (value) {
+            return parseFloat(value).toFixed(2);
+        }
+    });
+</script>
+
+<div style="padding: 15px; overflow: hidden">
+    <form id="ui_ordhedit_ordbedit_form" method="post" action="">
+    <table class="tableForm" width="100%">
+        <tr>
+            <th>
+                强度：
+            </th>
+            <td>
+                <input type="text" name="ui_ordhedit_ordbedit_stgid" id="ui_ordhedit_ordbedit_stgid" class="easyui-combogrid"
+                    data-options="required:true" autocomplete="off" disabled="false" />
+            </td>
+        </tr>
+        <tr>
+            <th>
+                单价：
+            </th>
+            <td>
+                <input type="text" name="ui_ordhedit_ordbedit_uniprice" id="ui_ordhedit_ordbedit_uniprice" class="easyui-numberbox" 
+                    data-options="required:true, precision:2 " autocomplete="off" />
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="ui_ordhedit_ordbedit_compid" id="ui_ordhedit_ordbedit_compid" />
+    <input type="hidden" name="ui_ordhedit_ordbedit_factid" id="ui_ordhedit_ordbedit_factid" />
+    <input type="hidden" name="ui_ordhedit_ordbedit_ordid" id="ui_ordhedit_ordbedit_ordid" />
+    <input type="hidden" name="ui_ordhedit_ordbedit_stgid2" id="ui_ordhedit_ordbedit_stgid2" />
+    </form>
+</div>

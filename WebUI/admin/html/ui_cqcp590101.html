@@ -1,0 +1,148 @@
+﻿<script type="text/javascript">
+    $(function () {
+        //企业下拉数据
+        $("#ui_cqcp590101_factidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getFactory",
+            panelWidth: 200,
+            multiple: true,
+            idField: "factid",
+            textField: "factname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'factid', title: '代号', width: 40 },
+                { field: 'factname', title: '简称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+        //职位下拉数据
+        $("#ui_cqcp590101_posidFilter").combogrid({
+            url: "ashx/bg_dddw.ashx?action=getPosid",
+            panelWidth: 200,
+            multiple: true,
+            idField: "posid",
+            textField: "posname",
+            method: 'get',
+            mode: 'remote',
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'posid', title: '代号', width: 40 },
+                { field: 'posname', title: '名称', width: 60 },
+                ]],
+            fitColumns: true
+        });
+
+    });
+
+    //打印
+    function print_cqcp590101() {
+        $("#ui_cqcp590101_rptframe").contents().find("#btn_print").click();
+    }
+
+    //展开逻辑
+    var ui_cqcp590101_ifcollapsed = 'Y';
+    $("#ui_cqcp590101_colltr").hide();
+    $("#ui_cqcp590101_collLabel2").hide();
+
+    function collapsed_cqcp590101() {
+        if (ui_cqcp590101_ifcollapsed == 'N') {
+            $("#ui_cqcp590101_SDiv").height(39);
+            $("#ui_cqcp590101_colltr").hide();
+            $("#ui_cqcp590101_collLabel2").hide();
+            $("#ui_cqcp590101_collLabel1").show();
+            ui_cqcp590101_ifcollapsed = 'Y';
+        }
+        else {
+            $("#ui_cqcp590101_SDiv").height(78)
+            $("#ui_cqcp590101_colltr").show();
+            $("#ui_cqcp590101_collLabel1").hide();
+            $("#ui_cqcp590101_collLabel2").show();
+            ui_cqcp590101_ifcollapsed = 'N';
+        }
+    }
+
+    //钻取页面
+    function detail_cqcp590101(compid, factid) {
+        if ($('#tabs').tabs('exists', "试验室人员情况查询(明细)")) {
+            $('#tabs').tabs('close', "试验室人员情况查询(明细)");
+        }
+        $('#ui_cqcp590101_compidTrans').val(compid);
+        $('#ui_cqcp590101_factidTrans').val(factid);
+        addTab("试验室人员情况查询(明细)", "html/ui_cqcp590101_st1.html", "");
+    }
+
+    //加载等待页面
+    function loading_cqcp590101() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: true,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590101() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<div id="ui_cqcp590101_layout" class="easyui-layout" data-options="fit:true,border:false">
+    <%--查询条件--%>
+    <div id='ui_cqcp590101_SDiv' data-options="region:'north',split:false,border:false,collapsed:false" style="width: 100%;height:39px;"> 
+        <div id="ui_cqcp590101_searchDiv">
+            <form id="ui_cqcp590101_searchForm" method="post" target="ui_cqcp590101_rptframe" action="aspx/cqcp590101.aspx">
+            <table class="tableForm" style="width: 100%; height: 100%; background: #F5F5F5;">
+                <tr>
+                    <th style="width:80px;">职位:</th>
+                    <td><select id="ui_cqcp590101_posidFilter" name="ui_cqcp590101_posidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:150px;" prompt="全选"></select></td>
+                    <th style="width:80px;">企业:</th>
+                    <td><select id="ui_cqcp590101_factidFilter" name="ui_cqcp590101_factidFilter" class="easyui-combogrid" 
+                                editable="false" style="width:150px;" prompt="全选"></select></td>
+                    <th>姓名:</th>
+                    <td><input id="ui_cqcp590101_empnameFilter" name="ui_cqcp590101_empnameFilter" class="easyui-textbox"
+                                style="width:150px;" prompt="按姓名模糊过滤.." /></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-search" plain="true"
+                                id="ui_cqcp590101_searchA" onClick="javascript:loading_cqcp590101();ui_cqcp590101_searchForm.submit();" >查询</a></td>
+                    <td><a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-printer" plain="true"
+                                id="ui_cqcp590101_printA" onclick="print_cqcp590101()" style="visibility:hidden">打印</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" iconcls="icon-collapse" plain="true"
+                                id="ui_cqcp590101_collapsedA" onclick="collapsed_cqcp590101()">
+                                <label id="ui_cqcp590101_collLabel1">展开</label>
+                                <label id="ui_cqcp590101_collLabel2">收起</label></a></td>
+                </tr>
+                <tr id="ui_cqcp590101_colltr">
+                    <th>身份证号:</th>
+                    <td><input id="ui_cqcp590101_identitynoFilter" name="ui_cqcp590101_identitynoFilter" 
+                            class="easyui-textbox" style="width:150px;" prompt="按身份证号模糊过滤.." /></td>
+                    <th>上岗证号:</th>
+                    <td><input id="ui_cqcp590101_emp60Filter" name="ui_cqcp590101_emp60Filter"
+                            class="easyui-textbox" style="width:150px;" prompt="按上岗证号模糊过滤.."/></td>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <%--查询结果--%>
+    <div data-options="region:'center',border:false">
+        <iframe id="ui_cqcp590101_rptframe" name="ui_cqcp590101_rptframe" width="100%" height="100%" frameborder="0" />
+        <input type="hidden" id="ui_cqcp590101_compidTrans" />
+        <input type="hidden" id="ui_cqcp590101_factidTrans" />
+    </div>
+</div>

@@ -1,0 +1,1697 @@
+﻿<script type="text/javascript">
+    // JScript 文件
+    var factid1 = "K3|";
+    var factid2 = "24|";
+    var factid3 = "K5|";
+    var factid4 = "22|";
+    var factid5 = "27|";
+    var factid6 = "28|";
+    var factid7 = "33|";
+    var factid8 = "38|";
+    var factid9 = "K1|";
+    var factid10 = "K2|";
+    var factid11 = "K4|";
+    var factid12 = "K6|";
+    var factid13 = "K7|";
+    var factid14 = "K8|";
+    var factid15 = "K9|";
+    var factid16 = "KA|";
+    var factid17 = "KB|";
+    var factid18 = "KC|";
+    var factid19 = "KD|";
+    var factid20 = "KE|";
+    var factid21 = "KF|";
+    $(function () {
+        show();
+        //setInterval("show()", 60000);
+    });
+
+    function show() {
+        showSum();
+        showPanel4(factid1, "p1");
+        showPanel5(factid2, "p2");
+        showPanel5(factid3, "p3");
+        showPanel(factid4, "p4");
+        showPanel(factid5, "p5");
+        showPanel(factid6, "p6");
+        showPanel(factid7, "p7");
+        showPanel(factid8, "p8");
+        showPanel(factid9, "p9");
+        showPanel(factid10, "p10");
+        showPanel(factid11, "p11");
+        showPanel(factid12, "p12");
+        showPanel(factid13, "p13");
+        showPanel(factid14, "p14");
+        showPanel(factid15, "p15");
+        showPanel(factid16, "p16");
+        showPanel(factid17, "p17");
+        showPanel(factid18, "p18");
+        showPanel(factid19, "p19");
+        showPanel(factid20, "p20");
+        showPanel(factid21, "p21");
+    }
+
+    function showSum() {
+        var tdate = new Date();
+        var yy_tdate = tdate.getFullYear();
+        var mm_tdate = tdate.getMonth() + 1;
+        var dd_tdate = tdate.getDate();
+        var datestr = yy_tdate + '-' + (mm_tdate < 10 ? '0' + mm_tdate : mm_tdate) + '-' + (dd_tdate < 10 ? '0' + dd_tdate : dd_tdate);
+        var monthstr = yy_tdate + '-' + (mm_tdate < 10 ? '0' + mm_tdate : mm_tdate);
+
+        $("#sumddate").text(datestr);
+        $("#sumdmonth").text(monthstr);
+
+        $.ajax({
+            url: "ashx/bg_chart.ashx?action=getSum",
+            type: "post",
+            dataType: "json",
+            async: false,
+            timeout: 5000,
+            success: function (data) {
+                $("#sumd").panel({ title: data.compname });
+                $("#sumddqty").text(Math.round(data.dayqty));
+                $("#sumdmqty").text(Math.round(data.monqty));
+            }
+        });
+    }
+
+    function showPanel(factid, pname) {
+        $.ajax({
+            url: "ashx/bg_chart.ashx?action=getfact",
+            type: "post",
+            data: { "factid": factid },
+            dataType: "json",
+            async: false,
+            timeout: 5000,
+            success: function (data) {
+                $('#' + pname).panel({ title: data.factname.toString() });
+                //厂状态标识（factstate）
+                if (data.factstate.toString() == '√') {
+                    //$('#p1').panel({iconCls:'icon-accept'});
+                    $('#' + pname).css("background", "#458B74");
+                    $('#' + pname + 's').css("background", "#ccffcc");
+                }
+                else {
+                    //$('#p1').panel({iconCls:'icon-exclamation'});
+                    $('#' + pname).css("background", "#B22222");
+                    $('#' + pname + 's').css("background", "#ffa07a");
+                    $('#' + pname + 'b1').css("background", "#ffa07a");
+                    $('#' + pname + 'b2').css("background", "#ffa07a");
+                    $('#' + pname + 'b3').css("background", "#ffa07a");
+                }
+                $("#" + pname + "sdqty").text(Math.round(data.factdayqty));
+                $("#" + pname + "smqty").text(Math.round(data.factmonqty));
+
+
+                //1号机
+                if (data.bujino1.toString() == '1') {
+                    $('#' + pname + 'b1table').css("visibility", "visible");
+                    $('#' + pname + 'b1').panel({ title: '1号机' });
+                    if (data.bujistate1.toString() == '√') {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b1').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b1').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b1dqty").text(Math.round(data.bujidayqty1));
+                    $("#" + pname + "b1mqty").text(Math.round(data.bujimonqty1));
+                }
+                else {
+                    $('#' + pname + 'b1table').css("visibility", "hidden")
+                }
+
+                //2号机
+                if (data.bujino2.toString() == '2') {
+                    $('#' + pname + 'b2table').css("visibility", "visible")
+                    $('#' + pname + 'b2').panel({ title: '2号机' });
+                    if (data.bujistate2.toString() == '√') {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b2').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b2').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b2dqty").text(Math.round(data.bujidayqty2));
+                    $("#" + pname + "b2mqty").text(Math.round(data.bujimonqty2));
+                }
+                else {
+                    $('#' + pname + 'b2table').css("visibility", "hidden")
+                }
+
+                //3号机
+                if (data.bujino3.toString() == '3') {
+                    $('#' + pname + 'b3table').css("visibility", "visible")
+                    $('#' + pname + 'b3').panel({ title: '3号机' });
+                    if (data.bujistate3.toString() == '√') {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b3').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b3').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b3dqty").text(Math.round(data.bujidayqty3));
+                    $("#" + pname + "b3mqty").text(Math.round(data.bujimonqty3));
+                }
+                else {
+                    $('#' + pname + 'b3table').css("visibility", "hidden")
+                }
+            }
+        });
+    }
+
+    function showPanel4(factid, pname) {
+        $.ajax({
+            url: "ashx/bg_chart.ashx?action=getfact",
+            type: "post",
+            data: { "factid": factid },
+            dataType: "json",
+            async: false,
+            timeout: 5000,
+            success: function (data) {
+                $('#' + pname).panel({ title: data.factname.toString() });
+                //厂状态标识（factstate）
+                if (data.factstate.toString() == '√') {
+                    //$('#p1').panel({iconCls:'icon-accept'});
+                    $('#' + pname).css("background", "#458B74");
+                    $('#' + pname + 's').css("background", "#ccffcc");
+                }
+                else {
+                    //$('#p1').panel({iconCls:'icon-exclamation'});
+                    $('#' + pname).css("background", "#B22222");
+                    $('#' + pname + 's').css("background", "#ffa07a");
+                    $('#' + pname + 'b1').css("background", "#ffa07a");
+                    $('#' + pname + 'b2').css("background", "#ffa07a");
+                    $('#' + pname + 'b3').css("background", "#ffa07a");
+                }
+                $("#" + pname + "sdqty").text(Math.round(data.factdayqty));
+                $("#" + pname + "smqty").text(Math.round(data.factmonqty));
+
+
+                //1号机
+                if (data.bujino1.toString() == '1') {
+                    $('#' + pname + 'b1table').css("visibility", "visible");
+                    $('#' + pname + 'b1').panel({ title: '1号机' });
+                    if (data.bujistate1.toString() == '√') {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b1').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b1').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b1dqty").text(Math.round(data.bujidayqty1));
+                    $("#" + pname + "b1mqty").text(Math.round(data.bujimonqty1));
+                }
+                else {
+                    $('#' + pname + 'b1table').css("visibility", "hidden")
+                }
+
+                //2号机
+                if (data.bujino2.toString() == '2') {
+                    $('#' + pname + 'b2table').css("visibility", "visible")
+                    $('#' + pname + 'b2').panel({ title: '2号机' });
+                    if (data.bujistate2.toString() == '√') {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b2').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b2').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b2dqty").text(Math.round(data.bujidayqty2));
+                    $("#" + pname + "b2mqty").text(Math.round(data.bujimonqty2));
+                }
+                else {
+                    $('#' + pname + 'b2table').css("visibility", "hidden")
+                }
+
+                //3号机
+                if (data.bujino3.toString() == '3') {
+                    $('#' + pname + 'b3table').css("visibility", "visible")
+                    $('#' + pname + 'b3').panel({ title: '3号机' });
+                    if (data.bujistate3.toString() == '√') {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b3').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b3').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b3dqty").text(Math.round(data.bujidayqty3));
+                    $("#" + pname + "b3mqty").text(Math.round(data.bujimonqty3));
+                }
+                else {
+                    $('#' + pname + 'b3table').css("visibility", "hidden")
+                }
+
+                //4号机
+                if (data.bujino4.toString() == '4') {
+                    $('#' + pname + 'b4table').css("visibility", "visible")
+                    $('#' + pname + 'b4').panel({ title: '4号机' });
+                    if (data.bujistate4.toString() == '√') {
+                        $('#' + pname + 'b4').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b4').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b4').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b4').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b4dqty").text(Math.round(data.bujidayqty4));
+                    $("#" + pname + "b4mqty").text(Math.round(data.bujimonqty4));
+                }
+                else {
+                    $('#' + pname + 'b4table').css("visibility", "hidden")
+                }
+            }
+        });
+    }
+
+    function showPanel5(factid, pname) {
+        $.ajax({
+            url: "ashx/bg_chart.ashx?action=getfact",
+            type: "post",
+            data: { "factid": factid },
+            dataType: "json",
+            async: false,
+            timeout: 5000,
+            success: function (data) {
+                $('#' + pname).panel({ title: data.factname.toString() });
+                //厂状态标识（factstate）
+                if (data.factstate.toString() == '√') {
+                    //$('#p1').panel({iconCls:'icon-accept'});
+                    $('#' + pname).css("background", "#458B74");
+                    $('#' + pname + 's').css("background", "#ccffcc");
+                }
+                else {
+                    //$('#p1').panel({iconCls:'icon-exclamation'});
+                    $('#' + pname).css("background", "#B22222");
+                    $('#' + pname + 's').css("background", "#ffa07a");
+                    $('#' + pname + 'b1').css("background", "#ffa07a");
+                    $('#' + pname + 'b2').css("background", "#ffa07a");
+                    $('#' + pname + 'b3').css("background", "#ffa07a");
+                }
+                $("#" + pname + "sdqty").text(Math.round(data.factdayqty));
+                $("#" + pname + "smqty").text(Math.round(data.factmonqty));
+
+
+                //1号机
+                if (data.bujino1.toString() == '1') {
+                    $('#' + pname + 'b1table').css("visibility", "visible");
+                    $('#' + pname + 'b1').panel({ title: '1号机' });
+                    if (data.bujistate1.toString() == '√') {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b1').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b1').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b1').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b1dqty").text(Math.round(data.bujidayqty1));
+                    $("#" + pname + "b1mqty").text(Math.round(data.bujimonqty1));
+                }
+                else {
+                    $('#' + pname + 'b1table').css("visibility", "hidden")
+                }
+
+                //2号机
+                if (data.bujino2.toString() == '2') {
+                    $('#' + pname + 'b2table').css("visibility", "visible")
+                    $('#' + pname + 'b2').panel({ title: '2号机' });
+                    if (data.bujistate2.toString() == '√') {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b2').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b2').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b2').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b2dqty").text(Math.round(data.bujidayqty2));
+                    $("#" + pname + "b2mqty").text(Math.round(data.bujimonqty2));
+                }
+                else {
+                    $('#' + pname + 'b2table').css("visibility", "hidden")
+                }
+
+                //3号机
+                if (data.bujino3.toString() == '3') {
+                    $('#' + pname + 'b3table').css("visibility", "visible")
+                    $('#' + pname + 'b3').panel({ title: '3号机' });
+                    if (data.bujistate3.toString() == '√') {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b3').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b3').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b3').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b3dqty").text(Math.round(data.bujidayqty3));
+                    $("#" + pname + "b3mqty").text(Math.round(data.bujimonqty3));
+                }
+                else {
+                    $('#' + pname + 'b3table').css("visibility", "hidden")
+                }
+
+                //4号机
+                if (data.bujino4.toString() == '4') {
+                    $('#' + pname + 'b4table').css("visibility", "visible")
+                    $('#' + pname + 'b4').panel({ title: '4号机' });
+                    if (data.bujistate4.toString() == '√') {
+                        $('#' + pname + 'b4').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b4').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b4').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b4').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b4dqty").text(Math.round(data.bujidayqty4));
+                    $("#" + pname + "b4mqty").text(Math.round(data.bujimonqty4));
+                }
+                else {
+                    $('#' + pname + 'b4table').css("visibility", "hidden")
+                }
+
+                //5号机
+                if (data.bujino5.toString() == '5') {
+                    $('#' + pname + 'b5table').css("visibility", "visible")
+                    $('#' + pname + 'b5').panel({ title: '5号机' });
+                    if (data.bujistate5.toString() == '√') {
+                        $('#' + pname + 'b5').panel({ iconCls: 'icon-stop_green' });
+                        $('#' + pname + 'b5').css("background", "#ccffcc");
+                    }
+                    else {
+                        $('#' + pname + 'b5').panel({ iconCls: 'icon-stop_red' });
+                        $('#' + pname + 'b5').css("background", "#ffa07a");
+                    }
+                    $("#" + pname + "b5dqty").text(Math.round(data.bujidayqty5));
+                    $("#" + pname + "b5mqty").text(Math.round(data.bujimonqty5));
+                }
+                else {
+                    $('#' + pname + 'b5table').css("visibility", "hidden")
+                }
+            }
+        });
+    }
+
+    //加载等待页面
+    function loading_cqcp590408() {
+        $("<div>").dialog({
+            id: "ui_loading_dialog",
+            href: "html/ui_loading.html",
+            title: "提示",
+            height: 250,
+            width: 400,
+            modal: false,
+            closable: false,
+            onClose: function () {
+                $(this).dialog('destroy'); //销毁  
+            }
+        });
+    }
+
+    //关闭等待页面
+    function dclose_cqcp590408() {
+        $('#ui_loading_dialog').dialog('close');
+    }
+</script>
+
+<style type="text/css">
+        .ptitle div{font-size:28px;height:20px;padding:6px;font-family:新宋体}
+        .btitle div{font-size:18px;height:15px;font-family:新宋体}
+        #t_cqcp590408 * label{font-size:16px}
+</style>
+
+<table id="t_cqcp590408" width="100%" >
+<tr>
+    <td>
+        <div id="sumd" class="easyui-panel" title="" style="width:362px;height:185px;padding:5px;background-color:#336699" data-options="headerCls:'ptitle'">
+	        <div class="easyui-layout" data-options="fit:true">
+			        <div id="sumd1" data-options="region:'north',split:false,collapsible:false,border:true,headerCls:'btitle'" style="height:68px;width:112px; padding:8px; background-color:lavender;overflow:hidden;">
+			            <table>
+			                <tr>
+			                    <td><label>当前日期:</label></td>
+			                    <th><label id="sumddate"></label></th>
+			                </tr>
+			                <tr>
+			                    <td><label>当日总方量:</label></td>
+			                    <th><label id="sumddqty"></label></th>
+			                </tr>
+			            </table>
+			        </div>
+			        <div id="sumd2" data-options="region:'center',split:false,collapsible:false,border:true,headerCls:'btitle'" style="width:112px; padding:8px; background-color:lavender;overflow:hidden;">
+			            <table>
+			                <tr>
+			                    <td><label>当前月份:</label></td>
+			                    <th><label id="sumdmonth"></label></th>
+			                </tr>
+			                <tr>
+			                    <td><label>当月总方量:</label></td>
+			                    <th><label id="sumdmqty"></label></th>
+			                </tr>
+			            </table>
+			        </div>
+	        </div>
+        </div>
+    </td>
+    <td colspan="2">
+        <div id="p1" class="easyui-panel" title=" " style="width:710px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p1b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p1b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p1b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p1b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p1b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p1b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p1b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p1b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p1b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p1b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p1b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p1b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p1b4" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p1b4table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p1b4dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p1b4mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="4">
+			        <div id="p1s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p1stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p1sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p1smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="3">
+        <div id="p2" class="easyui-panel" title=" " style="width:885px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p2b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p2b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p2b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p2b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p2b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p2b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p2b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p2b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p2b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p2b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p2b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p2b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p2b4" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p2b4table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p2b4dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p2b4mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p2b5" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p2b5table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p2b5dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p2b5mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="5">
+			        <div id="p2s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p2stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p2sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p2smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="3">
+        <div id="p3" class="easyui-panel" title=" " style="width:885px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p3b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p3b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p3b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p3b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p3b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p3b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p3b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p3b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p3b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p3b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p3b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p3b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p3b4" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p3b4table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p3b4dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p3b4mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p3b5" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:170px; padding:2px;">
+			                <table id="p3b5table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p3b5dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p3b5mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="5">
+			        <div id="p3s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p3stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p3sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p3smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p4" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p4b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p4b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p4b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p4b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p4b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p4b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p4b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p4b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p4b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p4b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p4b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p4b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p4s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p4stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p4sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p4smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p5" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p5b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p5b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p5b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p5b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p5b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p5b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p5b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p5b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p5b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p5b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p5b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p5b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p5s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p5stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p5sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p5smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p6" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p6b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p6b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p6b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p6b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p6b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p6b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p6b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p6b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p6b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p6b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p6b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p6b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p6s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p6stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p6sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p6smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p7" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p7b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p7b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p7b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p7b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p7b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p7b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p7b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p7b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p7b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p7b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p7b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p7b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p7s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p7stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p7sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p7smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p8" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p8b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p8b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p8b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p8b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p8b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p8b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p8b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p8b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p8b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p8b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p8b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p8b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p8s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p8stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p8sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p8smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p9" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p9b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p9b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p9b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p9b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p9b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p9b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p9b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p9b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p9b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p9b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p9b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p9b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p9s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p9stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p9sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p9smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p10" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p10b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p10b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p10b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p10b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p10b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p10b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p10b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p10b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p10b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p10b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p10b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p10b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p10s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p10stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p10sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p10smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p11" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p11b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p11b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p11b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p11b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p11b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p11b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p11b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p11b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p11b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p11b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p11b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p11b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p11s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p11stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p11sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p11smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p12" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p12b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p12b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p12b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p12b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p12b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p12b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p12b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p12b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p12b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p12b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p12b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p12b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p12s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p12stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p12sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p12smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p13" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p13b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p13b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p13b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p13b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p13b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p13b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p13b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p13b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p13b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p13b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p13b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p13b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p13s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p13stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p13sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p13smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p14" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p14b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p14b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p14b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p14b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p14b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p14b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p14b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p14b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p14b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p14b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p14b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p14b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p14s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p14stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p14sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p14smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p15" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p15b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p15b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p15b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p15b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p15b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p15b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p15b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p15b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p15b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p15b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p15b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p15b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p15s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p15stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p15sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p15smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p16" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p16b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p16b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p16b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p16b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p16b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p16b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p16b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p16b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p16b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p16b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p16b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p16b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p16s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p16stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p16sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p16smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p17" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p17b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p17b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p17b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p17b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p17b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p17b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p17b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p17b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p17b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p17b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p17b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p17b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p17s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p17stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p17sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p17smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p18" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p18b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p18b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p18b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p18b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p18b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p18b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p18b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p18b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p18b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p18b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p18b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p18b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p18s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p18stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p18sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p18smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+        <div id="p19" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p19b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p19b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p19b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p19b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p19b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p19b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p19b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p19b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p19b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p19b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p19b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p19b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p19s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p19stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p19sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p19smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p20" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p20b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p20b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p20b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p20b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p20b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p20b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p20b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p20b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p20b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p20b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p20b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p20b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p20s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p20stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p20sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p20smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+    <td>
+        <div id="p21" class="easyui-panel" title=" " style="width:362px;height:185px;padding:5px;overflow:hidden;" data-options="headerCls:'ptitle'">
+            <table><tr><td>
+			            <div id="p21b1" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p21b1table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p21b1dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p21b1mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+                        <div id="p21b2" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p21b2table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p21b2dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p21b2mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td>
+                    <td>
+			            <div id="p21b3" title=" " class="easyui-panel" data-options="headerCls:'btitle'"  style="height:80px;width:112px; padding:2px;">
+			                <table id="p21b3table">
+			                    <tr>
+			                        <td><label>当日:</label></td>
+			                        <th><label id="p21b3dqty"></label></th>
+			                    </tr>
+			                    <tr>
+			                        <td><label>当月:</label></td>
+			                        <th><label id="p21b3mqty"></label></th>
+			                    </tr>
+			                </table>
+			            </div></td></tr>
+                <tr><td colspan="3">
+			        <div id="p21s" class="easyui-panel" style="height:40px; padding:5px">
+			            <table id="p21stable" width="100%">
+			                <tr>
+			                    <td style="width:20%"><label style="font-size:18px">当日:</label></td>
+			                    <th style="width:30%"><label id="p21sdqty" style="font-size:18px"></label></th>
+			                    <td style="width:20%"><label style="font-size:18px">当月:</label></td>
+			                    <th style="width:30%"><label id="p21smqty" style="font-size:18px"></label></th>
+			                </tr>
+			            </table>
+			        </div></td></tr>
+            </table>
+        </div>
+    </td>
+</tr>
+</table>
