@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>混凝土生产信息分析查询系统</title>
@@ -26,27 +26,27 @@
         <div style="position: absolute; z-index: 100000; height: 2046px; top: 0px; left: 0px;
             width: 100%; background: white; text-align: center;">
             <h1>
-                必须打开浏览器javascript支持！！！</h1>
+                必须打开浏览器javascript支持！！！
+            </h1>
         </div>
     </noscript>
     <div data-options="region:'north',border:false"
-        style="height: 60px; padding: 10px; font-size: xx-large; background-image: url('images/webTitle.jpg'); background-repeat: repeat-x;">
+         style="height: 60px; padding: 10px; font-size: xx-large; background-image: url('images/webTitle.jpg'); background-repeat: repeat-x;">
         <div style="position: absolute; left: 5px; top: 3px;">
-        <img alt="" src="images/webTitle_name.jpg" />
+            <img alt="" src="images/webTitle_name.jpg" />
         </div>
         <div style="position: absolute; right: 5px; top: 10px;" id="div_welcome">
         </div>
         <div style="position: absolute; right: 0px; bottom: 0px;">
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-boss'"
-                onclick="searchMyInfo();">我的信息</a><a href="javascript:void(0);" class="easyui-linkbutton"
-                    data-options="plain:true,iconCls:'icon-set1'" onclick="changePwd();">修改密码</a><a href="javascript:void(0);"
-                        class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-stop'" onclick="loginOut();">退出系统</a>
+               onclick="searchMyInfo();">我的信息</a><a href="javascript:void(0);" class="easyui-linkbutton"
+                                                    data-options="plain:true,iconCls:'icon-set1'" onclick="changePwd();">修改密码</a><a href="javascript:void(0);"
+                                                                                                                                    class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-stop'" onclick="loginOut();">退出系统</a>
         </div>
-        </div>
-    <div data-options="region:'west',split:false,title:'功能导航'" 
-        style="width: 230px; padding: 10px;">
-        <ul id="treeLeft">
-        </ul>
+    </div>
+    <div data-options="region:'west',split:false,title:'功能导航'"
+         style="width: 230px; padding: 10px;">
+        <div id="RightAccordion" class="easyui-accordion"></div>
     </div>
     <div data-options="region:'center'">
         <div id="tabs" class="easyui-tabs" fit="true" border="false" data-options="

@@ -15,9 +15,9 @@ namespace ZGZY.BLL
         /// <summary>
         /// 根据用户主键id查询用户可以访问的菜单
         /// </summary>
-        public string GetUserMenu(int id)
+        public string GetUserMenu(int id, int mainMenuId)
         {
-            DataTable dt = dal.GetUserMenu(id);
+            DataTable dt = dal.GetUserMenu(id, mainMenuId);
             StringBuilder sb = new StringBuilder();
             sb.Append("[");
             DataRow[] rows = dt.Select("menuparentid = 0");   //赋权限每个角色都必须有父节点的权限，否则一个都不输出了
@@ -188,6 +188,12 @@ namespace ZGZY.BLL
         public string GetMenuButton(int menuid)
         {
             DataTable dt = dal.GetMenuButton(menuid);
+            return ZGZY.Common.JsonHelper.ToJson(dt);
+        }
+
+        public string GetMainMenu(int id)
+        {
+            DataTable dt = dal.GetMainMenu(id);
             return ZGZY.Common.JsonHelper.ToJson(dt);
         }
 

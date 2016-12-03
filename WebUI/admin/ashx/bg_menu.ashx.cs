@@ -25,7 +25,8 @@ namespace ZGZY.WebUI.admin.ashx
                 switch (action)
                 {
                     case "getUserMenu":  //获取特定用户能看到的菜单（左侧树）
-                        context.Response.Write(new ZGZY.BLL.Menu().GetUserMenu(user.Id));
+                        int mainMenuId = Convert.ToInt32(context.Request.Params["mainMenuId"]);
+                        context.Response.Write(new ZGZY.BLL.Menu().GetUserMenu(user.Id, mainMenuId));
                         break;
                     case "getAllMenu":   //根据角色id获取此角色有的权限（设置角色时自动勾选已经有的按钮权限）
                         int roleid = Convert.ToInt32(context.Request.Params["roleid"]);  //角色id
@@ -88,6 +89,9 @@ namespace ZGZY.WebUI.admin.ashx
                         {
                             context.Response.Write("{\"msg\":\"分配失败！\",\"success\":true}");
                         }
+                        break;
+                    case "getMainMenu":
+                        context.Response.Write(new ZGZY.BLL.Menu().GetMainMenu(1));
                         break;
                     default:
                         context.Response.Write("{\"result\":\"参数错误！\",\"success\":false}");

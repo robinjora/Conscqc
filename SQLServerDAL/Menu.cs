@@ -14,16 +14,20 @@ namespace ZGZY.SQLServerDAL
         /// <summary>
         /// 根据用户主键id查询用户可以访问的菜单
         /// </summary>
-        public DataTable GetUserMenu(int id)
+        public DataTable GetUserMenu(int id, int mainMenuId)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select distinct(m.Name) menuname,m.Id menuid,m.Icon icon,u.Id userid,u.UserId username,m.ParentId menuparentid,m.Sort menusort,m.LinkAddress linkaddress from tbUser u");
             strSql.Append(" join tbUserRole ur on u.Id=ur.UserId");
             strSql.Append(" join tbRoleMenuButton rmb on ur.RoleId=rmb.RoleId");
             strSql.Append(" join tbMenu m on rmb.MenuId=m.Id");
-            strSql.Append(" where u.Id=@Id order by m.ParentId,m.Sort");
+            strSql.Append(" where u.Id=@Id and (m.MainMenuId = @MainMenuId or ISNULL(m.MainMenuId,0) = 0) order by m.ParentId,m.Sort");
 
-            return ZGZY.Common.SqlHelper.GetDataTable(ZGZY.Common.SqlHelper.connStr, CommandType.Text, strSql.ToString(), new SqlParameter("@Id", id));
+            SqlParameter[] paras = { 
+                                   new SqlParameter("@Id", id),
+                                   new SqlParameter("@MainMenuId", mainMenuId),
+                                   };
+            return ZGZY.Common.SqlHelper.GetDataTable(ZGZY.Common.SqlHelper.connStr, CommandType.Text, strSql.ToString(), paras);
         }
 
         /// <summary>
@@ -57,6 +61,18 @@ namespace ZGZY.SQLServerDAL
             string sqlStr;
             sqlStr = "select buttonid from tbMenuButton where menuid = " + menuid.ToString();
             return ZGZY.Common.SqlHelper.GetDataTable(ZGZY.Common.SqlHelper.connStr, CommandType.Text, sqlStr);
+        }
+
+        /// <summary>
+        /// 获取手风琴菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable GetMainMenu(int id)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select Id,Name,Icon from tbMainMenu order by Sort");
+            return ZGZY.Common.SqlHelper.GetDataTable(ZGZY.Common.SqlHelper.connStr, CommandType.Text, strSql.ToString());
         }
 
         public bool SetMenuButton(string menuid, string buttonids)

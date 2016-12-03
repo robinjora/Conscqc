@@ -4,16 +4,43 @@
 })
 
 function initLogin() {
-    $('#treeLeft').tree({    //初始化左侧功能树（不同用户显示的树是不同的）
-        method: 'GET',
-        url: 'ashx/bg_menu.ashx?action=getUserMenu',
-        lines: false,
-        onClick: function (node) {    //点击左侧的tree节点  打开右侧tabs显示内容
-            if (node.attributes) {
-                addTab(node.text, node.attributes.url, node.iconCls);
-            }
-        }
+    $("#RightAccordion").accordion({ //初始化accordion
+        border: false,
+        animate: true,
+
     });
+
+    $.post("ashx/bg_menu.ashx?action=getMainMenu", //获取第一层目录
+    function (data) {
+        $.each(data, function (i, e) {//循环创建手风琴的项
+            $('#RightAccordion').accordion('add', {
+                title: e.Name,
+                content: "<ul id='tree" + e.Id + "' ></ul>",
+                selected: true,
+                iconCls: e.Icon,
+                animate: true,
+                height: "auto"
+            });
+            $.parser.parse();
+
+            $('#tree' + e.Id).tree({    //初始化左侧功能树（不同用户显示的树是不同的）
+                method: 'GET',
+                url: 'ashx/bg_menu.ashx?action=getUserMenu&mainMenuId=' + e.Id,
+                lines: false,
+                animate: true,
+                onClick: function (node) {    //点击左侧的tree节点  打开右侧tabs显示内容
+                    if (node.attributes) {
+                        addTab(node.text, node.attributes.url, node.iconCls);
+                    }
+                },
+                onLoadSuccess: function (node, data) {
+                    if (data.length <= 0) {
+                        $('#RightAccordion').accordion("remove", e.Name);
+                    }
+                }
+            });
+        });
+    }, "json");
 
     $.ajax({
         url: "ashx/bg_user_login.ashx",

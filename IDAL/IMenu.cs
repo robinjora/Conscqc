@@ -11,7 +11,7 @@ namespace ZGZY.IDAL
         /// <summary>
         /// 根据用户主键id查询用户可以访问的菜单
         /// </summary>
-        DataTable GetUserMenu(int id);
+        DataTable GetUserMenu(int id, int mainMenuId);
 
         /// <summary>
         /// 根据角色id获取此角色可以访问的菜单和菜单下的按钮（编辑角色-菜单使用）
@@ -27,6 +27,13 @@ namespace ZGZY.IDAL
         /// 获取菜单按钮
         /// </summary>
         DataTable GetMenuButton(int menuid);
+
+        /// <summary>
+        /// 获取手风琴菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DataTable GetMainMenu(int id);
 
         /// <summary>
         /// 分配菜单按钮
