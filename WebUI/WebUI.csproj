@@ -105,6 +105,7 @@
     <Content Include="admin\highcharts\themes\skies.js" />
     <Content Include="admin\html\ui_bugs.html" />
     <Content Include="admin\html\ui_button.html" />
+    <Content Include="admin\html\ui_menu_setMainMenu.html" />
     <Content Include="admin\html\ui_ordh.html" />
     <Content Include="admin\html\ui_department.html" />
     <Content Include="admin\html\ui_department_add.html" />
@@ -2358,7 +2359,6 @@
     <Content Include="admin\themes\icon\zoom_in.png" />
     <Content Include="admin\themes\icon\zoom_out.png" />
     <Content Include="admin\html\ui_user_firstlogin.html" />
-    <Content Include="admin\副本 index.html" />
     <Content Include="findex.html" />
     <Content Include="ie8.html" />
     <Content Include="Web.config">

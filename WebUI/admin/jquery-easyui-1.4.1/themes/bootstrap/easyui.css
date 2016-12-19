@@ -176,8 +176,8 @@
   filter: none;
 }
 .accordion .accordion-header-selected {
-  background: #0081c2;
-}
+  background: #4b6d7d;
+} 
 .accordion .accordion-header-selected .panel-title {
   color: #fff;
 }

@@ -75,6 +75,17 @@ namespace ZGZY.SQLServerDAL
             return ZGZY.Common.SqlHelper.GetDataTable(ZGZY.Common.SqlHelper.connStr, CommandType.Text, strSql.ToString());
         }
 
+        /// <summary>
+        /// 获取根节点菜单所属主菜单Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int GetBelongMainMenuId(int id)
+        {
+            string sqlStr = "select isnull(MainMenuId,0) as MainMenuId from tbMenu where Id = " + id.ToString();
+            return (int)ZGZY.Common.SqlHelper.ExecuteScalar(ZGZY.Common.SqlHelper.connStr, CommandType.Text, sqlStr, null);
+        }
+
         public bool SetMenuButton(string menuid, string buttonids)
         {
             SqlParameter[] paras = { 
@@ -90,6 +101,13 @@ namespace ZGZY.SQLServerDAL
             {
                 return false;
             }
+        }
+
+        public bool SetMainMenu(string menuId, string mainMenuId)
+        {
+            string sqlStr = string.Format("update tbMenu set MainMenuId = {0} where Id = {1}", mainMenuId, menuId);
+            int result = ZGZY.Common.SqlHelper.ExecuteNonQuery(ZGZY.Common.SqlHelper.connStr, CommandType.Text, sqlStr, null);
+            return result > 0 ? true : false;
         }
     }
 }

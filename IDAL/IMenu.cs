@@ -35,9 +35,13 @@ namespace ZGZY.IDAL
         /// <returns></returns>
         DataTable GetMainMenu(int id);
 
+        int GetBelongMainMenuId(int id);
+
         /// <summary>
         /// 分配菜单按钮
         /// </summary>
         bool SetMenuButton(string menuid,string buttonids);
+
+        bool SetMainMenu(string menuId, string mainMenuId);
     }
 }

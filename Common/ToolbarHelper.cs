@@ -52,6 +52,9 @@ namespace ZGZY.Common
                     case "collapseall":
                         sb.Append("{\"text\": \"" + dt.Rows[i]["Name"] + "\",\"iconCls\":\"" + dt.Rows[i]["Icon"] + "\",\"handler\":\"" + pageName + "_collapseall();\"},");
                         break;
+                    case "setMainMenu":
+                        sb.Append("{\"text\": \"" + dt.Rows[i]["Name"] + "\",\"iconCls\":\"" + dt.Rows[i]["Icon"] + "\",\"handler\":\"" + pageName + "_setMainMenu();\"},");
+                        break;
                     default:
                         //browser不是按钮
                         break;

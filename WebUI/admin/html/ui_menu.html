@@ -31,7 +31,7 @@
                                        ]],
                             toolbar: toolbar.length == 0 ? null : toolbar,   //请求回来的当前用户可以操作的按钮
                             onDblClickRow: function (rowIndex, rowData) {     //双击行弹框编辑
-                                ui_menu_edit();
+                                //ui_menu_edit();
                             }
                         });
                     }
@@ -137,6 +137,78 @@
                 $("#ui_menu_setbutton_dialog").dialog('destroy');  //销毁dialog对象
             }
         });
+    }
+
+    function ui_menu_setMainMenu() {
+        var row = $("#ui_menu_dg").datagrid("getChecked");
+        if (row.length < 1) {
+            $.show_warning("提示", "请先选中要配置主菜单的菜单行");
+            return;
+        }
+        if (row.length > 1) {
+            $.show_warning("提示", "无法批量配置主菜单");
+            $("#ui_menu_dg").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+        }
+
+        if (row[0].ParentId == 0 || row[0].ParentId == "") {
+            $("<div/>").dialog({
+                id: "ui_menu_setMainMenu_dialog",
+                href: "html/ui_menu_setMainMenu.html",
+                title: "配置所属主菜单",
+                height: 220,
+                width: 380,
+                modal: true,
+                buttons: [{
+                    id: "ui_menu_setMainMenu_btn",
+                    text: '确 定',
+                    handler: function () {
+                        $("#ui_menu_setMainMenuform").form("submit", {
+                            url: "ashx/bg_menu.ashx",
+                            onSubmit: function (param) {
+                                $('#ui_menu_setMainMenu_btn').linkbutton('disable');    //点击就禁用按钮，防止连击
+                                param.action = 'setMainMenu';
+                            },
+                            success: function (data) {
+                                var dataJson = eval('(' + data + ')');    //转成json格式
+                                if (dataJson.success) {
+                                    $("#ui_menu_setMainMenu_dialog").dialog('destroy');  //销毁dialog对象
+                                    $.show_warning("提示", dataJson.msg);
+                                    $("#ui_menu_dg").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                                } else {
+                                    $('#ui_menu_setMainMenu_btn').linkbutton('enable');   //恢复按钮
+                                    $.show_warning("提示", dataJson.msg);
+                                }
+                            }
+                        });
+                    }
+                }],
+                onLoad: function () {
+                    $.ajax({
+                        url: "ashx/bg_menu.ashx",
+                        type: "post",
+                        data: {
+                            "action": "getBelongMainMenu",
+                            "menuid": row[0].Id
+                        },
+                        dataType: "json",
+                        timeout: 5000,
+                        success: function (data) {
+                            $('#ui_menu_setMainMenu_button').combogrid('setValue', data.mainMenuId);
+                        }
+                    });
+                    $("#ui_menu_setMainMenu_menuid").val(row[0].Id);
+                    $("#ui_menu_setMainMenu_menuname").val(row[0].Name);
+                },
+                onClose: function () {
+                    $("#ui_menu_setMainMenu_dialog").dialog('destroy');  //销毁dialog对象
+                }
+            });
+        } else {
+            $.show_warning("提示", "该功能只适用于根节点菜单");
+            $("#ui_menu_dg").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+        }
     }
 </script>
 <div id="ui_menu_layout" class="easyui-layout" data-options="fit:true,border:false">

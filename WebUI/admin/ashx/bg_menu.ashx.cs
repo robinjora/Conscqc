@@ -21,7 +21,7 @@ namespace ZGZY.WebUI.admin.ashx
                 userOperateLog = new Model.UserOperateLog();
                 userOperateLog.UserIp = context.Request.UserHostAddress;
                 userOperateLog.UserName = user.UserId;
-
+                int menuid = Convert.ToInt32(context.Request.Params["menuid"]);
                 switch (action)
                 {
                     case "getUserMenu":  //获取特定用户能看到的菜单（左侧树）
@@ -75,7 +75,6 @@ namespace ZGZY.WebUI.admin.ashx
                         //ZGZY.BLL.UserOperateLog.InsertOperateInfo(userOperateLog);
                         break;
                     case "getMenuButton":
-                        int menuid = Convert.ToInt32(context.Request.Params["menuid"]);
                         context.Response.Write(new ZGZY.BLL.Menu().GetMenuButton(menuid));
                         break;
                     case "setMenuButton":
@@ -87,11 +86,27 @@ namespace ZGZY.WebUI.admin.ashx
                         }
                         else
                         {
-                            context.Response.Write("{\"msg\":\"分配失败！\",\"success\":true}");
+                            context.Response.Write("{\"msg\":\"分配失败！\",\"success\":false}");
                         }
                         break;
                     case "getMainMenu":
                         context.Response.Write(new ZGZY.BLL.Menu().GetMainMenu(1));
+                        break;
+                    case "getBelongMainMenu":
+                        string belongMainMenuId = new ZGZY.BLL.Menu().GetBelongMainMenuId(menuid);
+                        context.Response.Write("{\"mainMenuId\":\"" + belongMainMenuId + "\"}");
+                        break;
+                    case "setMainMenu":
+                        string ui_menu_setMainMenu_menuid = context.Request.Params["ui_menu_setMainMenu_menuid"] ?? "";
+                        string ui_menu_setMainMenu_button = context.Request.Params["ui_menu_setMainMenu_button"] ?? "";
+                        if (ui_menu_setMainMenu_menuid != "" && new BLL.Menu().SetMainMenu(ui_menu_setMainMenu_menuid, ui_menu_setMainMenu_button))
+                        {
+                            context.Response.Write("{\"msg\":\"配置成功！\",\"success\":true}");
+                        }
+                        else
+                        {
+                            context.Response.Write("{\"msg\":\"配置失败！\",\"success\":false}");
+                        }
                         break;
                     default:
                         context.Response.Write("{\"result\":\"参数错误！\",\"success\":false}");

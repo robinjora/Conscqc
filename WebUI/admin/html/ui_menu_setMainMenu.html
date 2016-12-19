@@ -1,0 +1,39 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="ui_menu_setMainMenuform" method="post" action="">
+        <table class="tableForm" width="100%">
+            <tr>
+                <th>
+                    根节点菜单：
+                </th>
+                <td>
+                    <input type="hidden" id="ui_menu_setMainMenu_menuid" name="ui_menu_setMainMenu_menuid" />
+                    <input type="text" id="ui_menu_setMainMenu_menuname" name="ui_menu_setMainMenu_menuname"
+                           disabled="disabled" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    所属主菜单：
+                </th>
+                <td>
+                    <input class="easyui-combogrid" id="ui_menu_setMainMenu_button" name="ui_menu_setMainMenu_button"
+                           data-options="
+                    url:'ashx/bg_menu.ashx?action=getMainMenu',
+                    editable:false,
+                    idField:'Id',
+                    textField:'Name',
+                    method: 'get',
+                    mode: 'remote',
+                    multiple: false,
+                    columns: [[
+                        { field: 'Id', title: '代号', width: 40 },
+                        { field: 'Name', title: '名称', width: 60 },
+                        ]],
+                    fitColumns: true" />
+                    <img style="cursor: pointer; vertical-align: middle;" onclick="$('#ui_menu_setMainMenu_button').combobox('clear');"
+                         alt="清空选定" title="清空选定" src="themes/icon/edit-clear.png" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

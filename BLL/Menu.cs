@@ -184,7 +184,7 @@ namespace ZGZY.BLL
             DataTable dt = ZGZY.Common.SqlPagerHelper.GetPager(tableName, columns, order, pageSize, pageIndex, where, out totalCount);
             return ZGZY.Common.JsonHelper.ToJson(dt);
         }
-        
+
         public string GetMenuButton(int menuid)
         {
             DataTable dt = dal.GetMenuButton(menuid);
@@ -197,11 +197,22 @@ namespace ZGZY.BLL
             return ZGZY.Common.JsonHelper.ToJson(dt);
         }
 
+        public string GetBelongMainMenuId(int id)
+        {
+            int mainMenuId = dal.GetBelongMainMenuId(id);
+            return mainMenuId.ToString();
+        }
+
         public bool SetMenuButton(string menuid, string buttonids)
         {
             bool result = dal.SetMenuButton(menuid, buttonids);
             return result;
         }
 
+        public bool SetMainMenu(string menuId, string mainMenuId)
+        {
+            bool result = dal.SetMainMenu(menuId, mainMenuId);
+            return result;
+        }
     }
 }
